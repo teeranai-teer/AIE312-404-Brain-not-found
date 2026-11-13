@@ -187,6 +187,13 @@ app.get('/api/history/:sessionId', async(req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+
+// ตอนรันเทสต์ ไม่ต้องเปิดเซิร์ฟเวอร์เอง ให้ไฟล์เทสต์เปิดเองบนพอร์ตสุ่ม
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+
+// ส่งออก app ให้ไฟล์เทสต์เรียกใช้ได้
+export { app };

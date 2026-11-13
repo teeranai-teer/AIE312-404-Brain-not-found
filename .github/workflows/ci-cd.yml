@@ -2,19 +2,21 @@
 # CI/CD : Chat AI + Portfolio (BE + FE) บน GitHub Actions
 #
 # ทุก push และทุก Pull Request เข้า main : test-be, test-fe
-#   - test-be : ตรวจ syntax ของ BE แล้วลองสตาร์ทเซิร์ฟเวอร์ ยิง /health
+#   - test-be : ตรวจ syntax ของ BE, สตาร์ทเซิร์ฟเวอร์ยิง /health แล้วรันเทสต์ (api.test.js)
 #   - test-fe : ติดตั้ง package แล้ว build FE ถ้า build พังจะขึ้นสีแดง
 #
 # BE กับ FE แยกสายกัน ถ้าฝั่งหนึ่งพัง อีกฝั่งยังรันต่อได้
 #
-# push เข้า main และเทสต์ผ่าน: deploy BE ขึ้น Render ด้วย Deploy Hook
-# 
+# push เข้า main และเทสต์ผ่านทั้งสองฝั่ง : deploy-be สั่ง Render deploy BE ด้วย Deploy Hook
+#
 # ยังไม่มี (ทำทีหลังถ้ามีเวลา)
 #   - deploy FE ขึ้น Render
 #   - build Docker image และ push ขึ้น Docker Hub
 #
 # ไฟล์นี้ขึ้น GitHub สาธารณะ ห้ามใส่ key จริงลงไป
 # ค่าลับทั้งหมดต้องเก็บที่ GitHub -> Settings -> Secrets and variables -> Actions
+#   Secrets
+#     RENDER_DEPLOY_HOOK_BE   Deploy Hook URL ของ BE บน Render
 # ============================================================
 
 # ชื่อที่แสดงในแท็บ Actions ของ GitHub
@@ -73,6 +75,17 @@ jobs:
           sleep 5                                      # รอ 5 วินาทีให้เซิร์ฟเวอร์เริ่มทำงาน
           curl --fail http://localhost:3000/health     # ถ้าไม่ได้ 200 job นี้จะแดง
 
+      # รันเทสต์อัตโนมัติ (ไฟล์ *.test.js ในโฟลเดอร์ BE)
+      # ถ้ามีเทสต์ใดล้ม job นี้จะแดง และ deploy-be จะไม่ถูกสั่ง
+      - name: รันเทสต์
+        env:
+          # ค่าปลอม ห้ามใส่ key จริง เพราะไฟล์นี้ขึ้น GitHub สาธารณะ
+          GEMINI_API_KEY: dummy
+          GEMINI_MODEL: dummy
+          DATABASE_URL: postgresql://user:pass@localhost:5432/db
+        # บน GitHub ไม่มี test-db.js และ test-gemini.js (ไม่ได้ commit) จึงเจอแต่ api.test.js
+        run: node --test
+
   # ================= FRONTEND =================
 
   # ---------- ตรวจฝั่ง Frontend ----------
@@ -98,7 +111,6 @@ jobs:
       # build FE ผ่าน = React compile ได้ ไม่มี error
       - run: npm run build
 
-      
   # ================= DEPLOY =================
 
   # ---------- deploy BE ขึ้น Render ----------

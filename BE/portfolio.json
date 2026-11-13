@@ -1,11 +1,22 @@
 {
   "group": {
     "name": "404 Brain not found",
-    "concept": "",
-    "highlights": [],
-    "projects": [],
+    "concept": "ทีมนักสืบสวนข้อมูลที่เปลี่ยนหน้า Website Portfolio ให้เป็นแฟ้มคดี ผู้เยี่ยมชมสืบเรื่องราวของทีมได้จากการคุยกับ Detective AI ที่ตอบจากข้อมูลจริงของสมาชิกทุกคน",
+    "highlights": [
+      "ธีมนักสืบทั้งหน้าเว็บและบุคลิกของ AI",
+      "AI ตอบจากข้อมูลใน Portfolio เท่านั้น ถ้าไม่มีข้อมูลจะบอกตรงๆ แทนการแต่งเรื่อง",
+      "แยกงานชัดเจน: Frontend (Peem) และ Backend กับ AI (Tonn)",
+      "จำบริบทการสนทนาและเก็บประวัติแชตในฐานข้อมูล PostgreSQL"
+    ],
+    "projects": [
+      {
+        "name": "404 Brain Not Found Portfolio",
+        "description": "Website Portfolio ของทีมพร้อมห้อง Chat กับ Detective AI Frontend ด้วย React Backend ด้วย Express เก็บประวัติแชตใน PostgreSQL บน Neon และใช้ Gemini ตอบคำถามจากข้อมูล Portfolio",
+        "technologies": ["React", "Vite", "Express.js", "PostgreSQL", "Gemini API"]
+      }
+    ],
     "contact": {
-      "email": "teeranai.teer@bumail.net",
+      "email": ["teeranai.teer@bumail.net", "suppakorn.sangj@bumail.net"],
       "github": "https://github.com/teeranai-teer/AIE312-404-Brain-not-found"
     }
   },
@@ -30,6 +41,11 @@
       "skills": [
         "Python",
         "SQL",
+        "JavaScript",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Gemini API",
         "Arduino",
         "ROS2",
         "Machine Learning",
@@ -57,9 +73,17 @@
           "name": "UniLink",
           "description": "โปรเจกต์ระบบเครือข่ายสังคมออนไลน์สำหรับนักศึกษา มีฟังก์ชันโพสต์ แสดงความคิดเห็น และระบบแชต",
           "technologies": ["React", "Express.js", "PostgreSQL"]
+        },
+        {
+          "name": "404 Brain Not Found Portfolio",
+          "description": "พัฒนาฝั่ง Backend และ AI ของเว็บ Portfolio ทีม สร้าง API ด้วย Express ออกแบบตาราง PostgreSQL บน Neon เก็บประวัติแชต เชื่อม Gemini API และเขียน system prompt ให้ Detective AI ตอบคำถามจากข้อมูล Portfolio ของทีมเท่านั้น",
+          "technologies": ["Express.js", "PostgreSQL", "Neon", "Gemini API", "Node.js"]
         }
       ],
-      "contact": { "github": "", "email": "", "linkedin": "" }
+      "contact": { 
+        "github": "https://github.com/teeranai-teer", 
+        "email": "teeranai.teer@bumail.net", 
+        "linkedin": "www.linkedin.com/in/teeranai-teeraparpvongsa-26a2b542b" }
     },
     {
       "id": 2,
@@ -95,7 +119,10 @@
           "technologies": ["React", "Vite", "React Router", "CSS"]
         }
     ],
-      "contact": { "github": "", "email": "", "linkedin": "" }
+      "contact": { 
+        "github": "", 
+        "email": "suppakorn.sangj@bumail.net", 
+        "linkedin": "" }
     }
   ]
 }

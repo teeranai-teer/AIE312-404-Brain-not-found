@@ -1,0 +1,101 @@
+{
+  "group": {
+    "name": "404 Brain not found",
+    "concept": "",
+    "highlights": [],
+    "projects": [],
+    "contact": {
+      "email": "teeranai.teer@bumail.net",
+      "github": "https://github.com/teeranai-teer/AIE312-404-Brain-not-found"
+    }
+  },
+  "members": [
+    {
+      "id": 1,
+      "name": "Teernai Teeraparpvongsa",
+      "nickname": "Tonn",
+      "displayName": "Tonn Teeranai",
+      "agentCode": "AGENT-001",
+      "role": "Backend Developer",
+      "responsibilities": "Backend และฐานข้อมูล: สร้าง API ด้วย Express, ออกแบบตาราง PostgreSQL บน Neon เก็บประวัติแชต, เชื่อม Gemini พร้อมเขียน system prompt ให้ AI ตอบจากข้อมูล Portfolio, และดูแล CI/CD",
+      "bio": "นักศึกษาวิศวกรรมศาสตร์ที่สนใจการพัฒนาระบบ AI, Robotics, Hardware และ Infrastructure ชอบการแก้ปัญหาด้วยเทคโนโลยี การคิดวิเคราะห์ และการเรียนรู้สิ่งใหม่",
+      "interests": [
+        "Artificial Intelligence",
+        "Robotics",
+        "Hardware & Electronics",
+        "Infrastructure & Server",
+        "Database Systems",
+        "Mathematics & Science"
+      ],
+      "skills": [
+        "Python",
+        "SQL",
+        "Arduino",
+        "ROS2",
+        "Machine Learning",
+        "Database Design",
+        "Linux",
+        "Git & GitHub"
+      ],
+      "projects": [
+        {
+          "name": "Automatic Plant Watering System",
+          "description": "ระบบรดน้ำต้นไม้อัตโนมัติด้วย Arduino และเซนเซอร์สำหรับตรวจสอบสภาพแวดล้อมและควบคุมการรดน้ำ",
+          "technologies": ["Arduino", "Sensors", "Embedded Systems"]
+        },
+        {
+          "name": "AI Concrete Optimization",
+          "description": "พัฒนาระบบวางแผนการผลิตและจัดส่งคอนกรีต โดยใช้ Python และเทคนิค Optimization ภายใต้ข้อจำกัดด้านเวลาและทรัพยากร",
+          "technologies": ["Python", "Optimization", "Algorithms"]
+        },
+        {
+          "name": "ROS2 Person Detection",
+          "description": "พัฒนาระบบตรวจจับบุคคลด้วย YOLO และ ROS2 โดยเชื่อมการทำงานกับข้อมูลการเคลื่อนที่ของหุ่นยนต์",
+          "technologies": ["Python", "ROS2", "YOLO", "Computer Vision"]
+        },
+        {
+          "name": "UniLink",
+          "description": "โปรเจกต์ระบบเครือข่ายสังคมออนไลน์สำหรับนักศึกษา มีฟังก์ชันโพสต์ แสดงความคิดเห็น และระบบแชต",
+          "technologies": ["React", "Express.js", "PostgreSQL"]
+        }
+      ],
+      "contact": { "github": "", "email": "", "linkedin": "" }
+    },
+    {
+      "id": 2,
+      "name": "Suppakorn Sangjan",
+      "nickname": "Peem",
+      "displayName": "Peem Suppakorn",
+      "agentCode": "AGENT-002",
+      "role": "Frontend Developer",
+      "responsibilities": "Frontend: ออกแบบและพัฒนาหน้า Portfolio กับหน้า Chat ด้วย React รองรับมือถือ และเชื่อมกับ Backend",
+      "bio": "นักศึกษาวิศวกรรมปัญญาประดิษฐ์ ชั้นปีที่ 3 มหาวิทยาลัยกรุงเทพ สนใจด้าน Data Science ชอบค้นหาเบาะแสที่ซ่อนอยู่ในข้อมูลแล้วเล่าออกมาให้คนอื่นเข้าใจง่าย ไม่ว่าจะผ่านกราฟ ภาพ หรือหน้าเว็บ ในทีมรับผิดชอบงาน Frontend ทั้งออกแบบและพัฒนาหน้าเว็บให้ใช้งานง่ายทั้งบนคอมพิวเตอร์และมือถือ",
+      "interests": [
+        "Data Science", 
+        "Data Visualization", 
+        "Machine Learning", 
+        "Frontend Development", 
+        "UI/UX Design", 
+        "AI Applications"
+    ],
+      "skills": [
+        "React", 
+        "JavaScript", 
+        "HTML", 
+        "CSS", 
+        "Vite", 
+        "React Router", 
+        "REST API Integration", 
+        "Git & GitHub"
+    ],
+      "projects": [
+        {
+          "name": "404 Brain Not Found Portfolio",
+          "description": "พัฒนาเว็บไซต์ Portfolio ของทีมในธีมนักสืบ มีหน้าแนะนำสมาชิก ผลงาน และห้องแชตกับ AI ที่เรียกข้อมูลจาก Backend รองรับการเปลี่ยนธีม สลับภาษาไทย/อังกฤษ และใช้งานบนมือถือได้",
+          "technologies": ["React", "Vite", "React Router", "CSS"]
+        }
+    ],
+      "contact": { "github": "", "email": "", "linkedin": "" }
+    }
+  ]
+}

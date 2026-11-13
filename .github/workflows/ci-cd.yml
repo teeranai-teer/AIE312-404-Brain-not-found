@@ -1,5 +1,5 @@
 # ============================================================
-# CI : Chat AI + Portfolio (BE + FE) บน GitHub Actions
+# CI/CD : Chat AI + Portfolio (BE + FE) บน GitHub Actions
 #
 # ทุก push และทุก Pull Request เข้า main : test-be, test-fe
 #   - test-be : ตรวจ syntax ของ BE แล้วลองสตาร์ทเซิร์ฟเวอร์ ยิง /health
@@ -7,8 +7,10 @@
 #
 # BE กับ FE แยกสายกัน ถ้าฝั่งหนึ่งพัง อีกฝั่งยังรันต่อได้
 #
-# ยังไม่มีในรอบนี้ (เพิ่มทีหลังเมื่อรอบนี้เขียว)
-#   - deploy ขึ้น Render ด้วย Deploy Hook
+# push เข้า main และเทสต์ผ่าน: deploy BE ขึ้น Render ด้วย Deploy Hook
+# 
+# ยังไม่มี (ทำทีหลังถ้ามีเวลา)
+#   - deploy FE ขึ้น Render
 #   - build Docker image และ push ขึ้น Docker Hub
 #
 # ไฟล์นี้ขึ้น GitHub สาธารณะ ห้ามใส่ key จริงลงไป
@@ -16,7 +18,7 @@
 # ============================================================
 
 # ชื่อที่แสดงในแท็บ Actions ของ GitHub
-name: CI
+name: CI/CD
 
 # เมื่อไหร่ที่ให้ pipeline ทำงาน
 on:
@@ -95,3 +97,22 @@ jobs:
 
       # build FE ผ่าน = React compile ได้ ไม่มี error
       - run: npm run build
+
+      
+  # ================= DEPLOY =================
+
+  # ---------- deploy BE ขึ้น Render ----------
+  deploy-be:
+    # รอให้ test-be และ test-fe ผ่านทั้งคู่ก่อน ถ้าตัวใดตัวหนึ่งแดงจะไม่ deploy
+    needs: [test-be, test-fe]
+    # deploy เฉพาะตอน push เข้า main เท่านั้น (Pull Request จะไม่ deploy)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      # เรียก Deploy Hook ของ Render เพื่อสั่งให้ build และ deploy ใหม่
+      # -f ทำให้ job แดงถ้า Render ตอบ error  -sS ซ่อนความคืบหน้าแต่ยังแสดง error
+      - name: สั่ง Render deploy BE
+        run: curl -fsS -X POST "$DEPLOY_HOOK"
+        env:
+          # ดึงค่าจาก GitHub Secrets ค่านี้จะถูกซ่อนใน log
+          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_BE }}

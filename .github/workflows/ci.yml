@@ -1,0 +1,97 @@
+# ============================================================
+# CI : Chat AI + Portfolio (BE + FE) บน GitHub Actions
+#
+# ทุก push และทุก Pull Request เข้า main : test-be, test-fe
+#   - test-be : ตรวจ syntax ของ BE แล้วลองสตาร์ทเซิร์ฟเวอร์ ยิง /health
+#   - test-fe : ติดตั้ง package แล้ว build FE ถ้า build พังจะขึ้นสีแดง
+#
+# BE กับ FE แยกสายกัน ถ้าฝั่งหนึ่งพัง อีกฝั่งยังรันต่อได้
+#
+# ยังไม่มีในรอบนี้ (เพิ่มทีหลังเมื่อรอบนี้เขียว)
+#   - deploy ขึ้น Render ด้วย Deploy Hook
+#   - build Docker image และ push ขึ้น Docker Hub
+#
+# ไฟล์นี้ขึ้น GitHub สาธารณะ ห้ามใส่ key จริงลงไป
+# ค่าลับทั้งหมดต้องเก็บที่ GitHub -> Settings -> Secrets and variables -> Actions
+# ============================================================
+
+# ชื่อที่แสดงในแท็บ Actions ของ GitHub
+name: CI
+
+# เมื่อไหร่ที่ให้ pipeline ทำงาน
+on:
+  push:
+    branches: [main]      # ทุกครั้งที่ push เข้า main
+  pull_request:
+    branches: [main]      # ทุกครั้งที่เปิด Pull Request เข้า main
+  workflow_dispatch:      # กดรันเองได้จากแท็บ Actions
+
+# ให้ token ของ workflow อ่าน repo ได้อย่างเดียว (ปลอดภัยกว่าค่าเริ่มต้น)
+permissions:
+  contents: read
+
+jobs:
+  # ================= BACKEND =================
+
+  # ---------- ตรวจฝั่ง Backend ----------
+  test-be:
+    runs-on: ubuntu-latest        # เครื่อง Linux ที่ GitHub ให้ใช้ฟรี
+    defaults:
+      run:
+        working-directory: BE     # ทุกคำสั่งใน job นี้รันในโฟลเดอร์ BE
+    steps:
+      # ดึงโค้ดจาก repo มาไว้ในเครื่องที่ใช้รัน pipeline
+      - uses: actions/checkout@v4
+
+      # ติดตั้ง Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm                             # เก็บ cache ของ package ให้รอบต่อไปเร็วขึ้น
+          cache-dependency-path: BE/package-lock.json
+
+      # ติดตั้ง package ตาม package-lock.json แบบเป๊ะ (ต่างจาก npm install ที่อาจอัปเดตเวอร์ชัน)
+      - run: npm ci
+
+      # ตรวจว่า index.js เขียนถูกไวยากรณ์ (ไม่ได้รันจริง จับพวกวงเล็บขาดหรือพิมพ์ผิดได้)
+      - name: ตรวจ syntax
+        run: node --check index.js
+
+      # สตาร์ทเซิร์ฟเวอร์จริงแล้วยิง /health เพื่อเช็กว่าขึ้นได้
+      - name: สตาร์ทเซิร์ฟเวอร์และทดสอบ /health
+        env:
+          # ค่าปลอม ใช้ได้เพราะ /health ไม่แตะฐานข้อมูลหรือ Gemini
+          # ห้ามเอา key จริงมาใส่ตรงนี้
+          GEMINI_API_KEY: dummy
+          GEMINI_MODEL: dummy
+          DATABASE_URL: postgresql://user:pass@localhost:5432/db
+          PORT: 3000
+        run: |
+          node index.js &                              # เปิดเซิร์ฟเวอร์ทิ้งไว้เบื้องหลัง
+          sleep 5                                      # รอ 5 วินาทีให้เซิร์ฟเวอร์เริ่มทำงาน
+          curl --fail http://localhost:3000/health     # ถ้าไม่ได้ 200 job นี้จะแดง
+
+  # ================= FRONTEND =================
+
+  # ---------- ตรวจฝั่ง Frontend ----------
+  test-fe:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FE     # ทุกคำสั่งใน job นี้รันในโฟลเดอร์ FE
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: FE/package-lock.json
+
+      - run: npm ci
+
+      # รัน test ถ้ามีสคริปต์ test ใน package.json (ไม่มีก็ข้าม ไม่พัง)
+      - run: npm test --if-present
+
+      # build FE ผ่าน = React compile ได้ ไม่มี error
+      - run: npm run build

@@ -1,7 +1,7 @@
 # AIE312-404-Brain-not-found
 AI-powered detective-themed team portfolio website built with React, Express.js, PostgreSQL, and Gemini API. AIE312 Final Project.
 
-# เกี่ยวกับโปรเจกต์ (404 Brain Not Found · Chat AI Portfolio)
+## เกี่ยวกับโปรเจกต์ (404 Brain Not Found · Chat AI Portfolio)
 เว็บแอป Portfolio ของกลุ่ม 404 Brain Not Found (Detective Development Team) ในธีมแฟ้มคดีนักสืบ ผู้เยี่ยมชมดูข้อมูลทีมและสมาชิกแต่ละคน หรือพูดคุยกับ Detective AI ที่ตอบจากข้อมูล Portfolio จริงของสมาชิกทุกคน
 
 # Live demo

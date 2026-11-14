@@ -79,9 +79,18 @@ function Dossier() {
 }
 
 export function ContactLinks({ contact }) {
+  // email อาจเป็นสตริงเดียว (สมาชิก) หรืออาร์เรย์ (กลุ่ม)
+  // [].concat(...) แปลงเป็นอาร์เรย์เสมอ แล้ววนแสดงทีละอีเมล ไม่ให้ต่อกันเป็นก้อนเดียว
+  // ?? [] กันกรณีไม่มีอีเมล filter(Boolean) ตัดค่าว่างทิ้ง
+  const emails = [].concat(contact.email ?? []).filter(Boolean);
+
   return (
     <div className="contact-links">
-      {contact.email && <a href={`mailto:${contact.email}`}>✉ {contact.email}</a>}
+      {emails.map((email) => (
+        <a key={email} href={`mailto:${email}`}>
+          ✉ {email}
+        </a>
+      ))}
       {contact.github && (
         <a href={contact.github} target="_blank" rel="noreferrer">
           ⌥ GitHub ↗

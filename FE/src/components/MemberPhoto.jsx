@@ -1,4 +1,4 @@
-import logo from '../assets/detective.webp';
+import logo from '../assets/detective.png';
 
 // ถ้าสมาชิกมีรูป (member.photo เป็น URL) ใช้รูปนั้น ไม่มีก็ใช้รูปนักสืบแทน
 export default function MemberPhoto({ member, className = '' }) {

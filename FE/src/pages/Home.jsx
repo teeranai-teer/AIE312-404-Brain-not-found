@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSettings } from '../settings.jsx';
 import { usePortfolio } from '../portfolio.jsx';
-import logo from '../assets/detective.webp';
+import logo from '../assets/detective.png';;
 
 const pad = (n) => String(n).padStart(2, '0');
 

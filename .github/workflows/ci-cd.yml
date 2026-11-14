@@ -8,15 +8,16 @@
 # BE กับ FE แยกสายกัน ถ้าฝั่งหนึ่งพัง อีกฝั่งยังรันต่อได้
 #
 # push เข้า main และเทสต์ผ่านทั้งสองฝั่ง : deploy-be สั่ง Render deploy BE ด้วย Deploy Hook
+#                                 : deploy-fe สั่ง Render deploy FE ด้วย Deploy Hook
 #
 # ยังไม่มี (ทำทีหลังถ้ามีเวลา)
-#   - deploy FE ขึ้น Render
 #   - build Docker image และ push ขึ้น Docker Hub
 #
 # ไฟล์นี้ขึ้น GitHub สาธารณะ ห้ามใส่ key จริงลงไป
 # ค่าลับทั้งหมดต้องเก็บที่ GitHub -> Settings -> Secrets and variables -> Actions
 #   Secrets
 #     RENDER_DEPLOY_HOOK_BE   Deploy Hook URL ของ BE บน Render
+#     RENDER_DEPLOY_HOOK_FE   Deploy Hook URL ของ FE บน Render
 # ============================================================
 
 # ชื่อที่แสดงในแท็บ Actions ของ GitHub
@@ -128,3 +129,20 @@ jobs:
         env:
           # ดึงค่าจาก GitHub Secrets ค่านี้จะถูกซ่อนใน log
           DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_BE }}
+
+          
+  # ---------- deploy FE ขึ้น Render ----------
+  deploy-fe:
+    # รอให้ test-be และ test-fe ผ่านทั้งคู่ก่อน ถ้าตัวใดตัวหนึ่งแดงจะไม่ deploy
+    needs: [test-be, test-fe]
+    # deploy เฉพาะตอน push เข้า main เท่านั้น (Pull Request จะไม่ deploy)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      # เรียก Deploy Hook ของ FE เพื่อสั่งให้ Render build และ deploy FE ใหม่
+      # -f ทำให้ job แดงถ้า Render ตอบ error  -sS ซ่อนความคืบหน้าแต่ยังแสดง error
+      - name: สั่ง Render deploy FE
+        run: curl -fsS -X POST "$DEPLOY_HOOK"
+        env:
+          # ดึงค่าจาก GitHub Secrets ค่านี้จะถูกซ่อนใน log
+          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_FE }}

@@ -24,7 +24,7 @@ function Dossier() {
   const { id } = useParams();
   const { t, pick } = useSettings();
   const { members, projects } = usePortfolio();
-  const m = members.find((x) => x.id === id);
+  const m = members.find((x) => String(x.id) === id);
 
   if (!m) {
     return (

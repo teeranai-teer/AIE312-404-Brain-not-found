@@ -12,7 +12,8 @@
       {
         "name": "404 Brain Not Found Portfolio",
         "description": "Website Portfolio ของทีมพร้อมห้อง Chat กับ Detective AI Frontend ด้วย React Backend ด้วย Express เก็บประวัติแชตใน PostgreSQL บน Neon และใช้ Gemini ตอบคำถามจากข้อมูล Portfolio",
-        "technologies": ["React", "Vite", "Express.js", "PostgreSQL", "Gemini API"]
+        "technologies": ["React", "Vite", "Express.js", "PostgreSQL", "Gemini API"],
+        "icon": "web"
       }
     ],
     "contact": {
@@ -58,27 +59,32 @@
         {
           "name": "Automatic Plant Watering System",
           "description": "ระบบรดน้ำต้นไม้อัตโนมัติด้วย Arduino และเซนเซอร์สำหรับตรวจสอบสภาพแวดล้อมและควบคุมการรดน้ำ",
-          "technologies": ["Arduino", "Sensors", "Embedded Systems"]
+          "technologies": ["Arduino", "Sensors", "Embedded Systems"],
+          "icon": "plant"
         },
         {
           "name": "AI Concrete Optimization",
           "description": "พัฒนาระบบวางแผนการผลิตและจัดส่งคอนกรีต โดยใช้ Python และเทคนิค Optimization ภายใต้ข้อจำกัดด้านเวลาและทรัพยากร",
-          "technologies": ["Python", "Optimization", "Algorithms"]
+          "technologies": ["Python", "Optimization", "Algorithms"],
+          "icon": "factory"
         },
         {
           "name": "ROS2 Person Detection",
           "description": "พัฒนาระบบตรวจจับบุคคลด้วย YOLO และ ROS2 โดยเชื่อมการทำงานกับข้อมูลการเคลื่อนที่ของหุ่นยนต์",
-          "technologies": ["Python", "ROS2", "YOLO", "Computer Vision"]
+          "technologies": ["Python", "ROS2", "YOLO", "Computer Vision"],
+          "icon": "robot"
         },
         {
           "name": "UniLink",
           "description": "โปรเจกต์ระบบเครือข่ายสังคมออนไลน์สำหรับนักศึกษา มีฟังก์ชันโพสต์ แสดงความคิดเห็น และระบบแชต",
-          "technologies": ["React", "Express.js", "PostgreSQL"]
+          "technologies": ["React", "Express.js", "PostgreSQL"],
+          "icon": "web"
         },
         {
           "name": "404 Brain Not Found Portfolio",
           "description": "พัฒนาฝั่ง Backend และ AI ของเว็บ Portfolio ทีม สร้าง API ด้วย Express ออกแบบตาราง PostgreSQL บน Neon เก็บประวัติแชต เชื่อม Gemini API และเขียน system prompt ให้ Detective AI ตอบคำถามจากข้อมูล Portfolio ของทีมเท่านั้น",
-          "technologies": ["Express.js", "PostgreSQL", "Neon", "Gemini API", "Node.js"]
+          "technologies": ["Express.js", "PostgreSQL", "Neon", "Gemini API", "Node.js"],
+          "icon": "web"
         }
       ],
       "contact": { 
@@ -118,7 +124,8 @@
         {
           "name": "404 Brain Not Found Portfolio",
           "description": "พัฒนาเว็บไซต์ Portfolio ของทีมในธีมนักสืบ มีหน้าแนะนำสมาชิก ผลงาน และห้องแชตกับ AI ที่เรียกข้อมูลจาก Backend รองรับการเปลี่ยนธีม สลับภาษาไทย/อังกฤษ และใช้งานบนมือถือได้",
-          "technologies": ["React", "Vite", "React Router", "CSS"]
+          "technologies": ["React", "Vite", "React Router", "CSS"],
+          "icon": "web"
         }
     ],
       "contact": { 

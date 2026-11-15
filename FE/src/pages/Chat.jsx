@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSettings } from '../settings.jsx';
 import { sendMessage, getHistory, errorText, USE_MOCK } from '../api.js';
+import RichText from '../components/RichText.jsx';
 import {
   loadSessions,
   saveSessions,
@@ -183,9 +184,16 @@ export default function Chat() {
             )}
 
             {messages.map((m, i) => (
-              <div key={i} className={`bubble ${m.role === 'user' ? 'user' : 'bot'}`}>
-                {m.content}
-              </div>
+              // ข้อความผู้ใช้แสดงตามที่พิมพ์ ส่วนคำตอบ AI แปลง Markdown (**ตัวหนา**, รายการ) ก่อนแสดง
+              m.role === 'user' ? (
+                <div key={i} className="bubble user">
+                  {m.content}
+                </div>
+              ) : (
+                <div key={i} className="bubble bot rich">
+                  <RichText text={m.content} />
+                </div>
+              )
             ))}
 
             {sending && (

@@ -17,7 +17,7 @@ export default function Team() {
       <PortfolioGate>
         <div className="grid2">
           {members.map((m) => (
-            <article className="paper stack agent" key={m.id}>
+            <article className="paper agent" key={m.id}>
               <span className="pin" />
               <div className="agent-inner">
                 <MemberPhoto member={m} />

@@ -27,7 +27,7 @@ export default function Projects() {
         <div className="grid3">
           {projects.map((p, i) => (
             <article
-              className={`paper stack project${p.id === target ? ' highlight' : ''}`}
+              className={`paper project${p.id === target ? ' highlight' : ''}`}
               id={p.id}
               key={p.id}
             >

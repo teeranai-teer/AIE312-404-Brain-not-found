@@ -2,13 +2,13 @@
 
 AI-powered detective-themed team portfolio website built with React, Express.js, PostgreSQL, and Gemini API. AIE312 Final Project.
 
-### เกี่ยวกับโปรเจกต์ (404 Brain Not Found · Chat AI Portfolio)
+## เกี่ยวกับโปรเจกต์ (404 Brain Not Found · Chat AI Portfolio)
 
 เว็บแอป Portfolio ของกลุ่ม 404 Brain Not Found (Detective Development Team) ในธีมแฟ้มคดีนักสืบ ผู้เยี่ยมชมดูข้อมูลทีมและสมาชิกแต่ละคน หรือพูดคุยกับ Detective AI ที่ตอบจากข้อมูล Portfolio จริงของสมาชิกทุกคน
 
 ## Live demo
 
-| ส่วน | ลิงค์ |
+| ส่วน | ลิงก์ |
 | --- | --- |
 | เว็บไซต์ (Frontend) | https://aie312-404-brain-not-found-fe.onrender.com |
 | Backend API | https://aie312-404-brain-not-found-be.onrender.com |
@@ -20,17 +20,42 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 
 | ชื่อ-นามสกุล | บทบาท | ความรับผิดชอบ | GitHub |
 | --- | --- | --- | --- |
-| Teeranai Teeraparpvongsa (Tonn) | Backend Developer | Express API, ฐานข้อมูล PostgreSQL บน Neon, เชื่อม Gemini และเขียน system prompt, CI/CD, deploy | teeranai-teer |
-| Suppakorn Sangjan (Peem) | Frontend Developer | ออกแบบและพัฒนาหน้าเว็บด้วย React, ห้องแชต, รองรับมือถือ, เชื่อมกับ Backend | Peem040 |
+| Teeranai Teeraparpvongsa (Tonn) | Backend Developer | Express API, ฐานข้อมูล PostgreSQL บน Neon, เชื่อม Gemini และเขียน system prompt, CI/CD, deploy | [teeranai-teer](https://github.com/teeranai-teer) |
+| Suppakorn Sangjan (Peem) | Frontend Developer | Frontend ทั้งหมด: ออกแบบและพัฒนาเว็บด้วย React + Vite + React Router (หน้าแรก ทีม โปรไฟล์ โปรเจกต์ แชต ตั้งค่า ติดต่อ), ธีมนักสืบ (รวมธีม Victorian และหน้าทางเข้า), ห้องแชตและการแสดงคำตอบแบบ Markdown, ระบบสลับธีมและภาษาไทย/อังกฤษ, รองรับมือถือ, เชื่อมกับ Backend | [Peem040](https://github.com/Peem040) |
+
+### งานของ Teeranai (Tonn): Backend, Database, AI, CI/CD
+
+| งาน | รายละเอียด |
+| --- | --- |
+| Backend API | สร้าง Express server และ endpoint `/health`, `/api/portfolio`, `/api/chat`, `/api/history/:sessionId` ตรวจข้อมูลที่ส่งเข้ามา (ไม่มีข้อความ ข้อความว่าง ข้อความยาวเกิน 1,000 ตัวอักษร ไม่มี `sessionId`) และตอบ error เป็นภาษาไทย |
+| ฐานข้อมูล | ออกแบบตาราง `conversations` และ `messages` บน PostgreSQL (Neon) เก็บประวัติแชตแยกตาม session เชื่อมต่อผ่าน `db.js` |
+| AI | เชื่อม Gemini API เขียน system prompt ให้ Detective AI ตอบจากข้อมูลใน `portfolio.json` เท่านั้น ไม่แต่งเรื่อง ส่งประวัติแชตล่าสุดเพื่อให้จำบริบท ตอบตามภาษาของผู้ใช้ ใช้ชื่อเต็มพร้อมชื่อเล่น และจัดการกรณี Gemini ไม่ว่างหรือผิดพลาด |
+| ข้อมูล Portfolio | จัดทำ `portfolio.json` (ข้อมูลกลุ่ม สมาชิก ผลงาน) ซึ่งเป็นแหล่งข้อมูลเดียวของทั้ง AI และหน้าเว็บ |
+| เทสต์ | เขียนเทสต์อัตโนมัติ 11 ข้อ (`api.test.js`, `server.test.js`) ที่ไม่ต้องใช้ฐานข้อมูลหรือ API key |
+| CI/CD | ตั้ง GitHub Actions: ทดสอบ BE และ FE แล้ว deploy ขึ้น Render อัตโนมัติผ่าน Deploy Hook |
+| Deploy | ตั้งค่า Render (BE เป็น Web Service, FE เป็น Static Site พร้อม Rewrite) และฐานข้อมูลบน Neon |
+| เชื่อม FE กับ BE | แก้จุดต่อข้อมูลระหว่างสองฝั่ง (`FE/src/portfolio.jsx` แปลงรูปแบบข้อมูลจาก BE) เพิ่มรูปสมาชิก ไอคอนโปรเจกต์ และโลโก้ |
+
+### งานของ Suppakorn (Peem): Frontend
+
+| งาน | รายละเอียด |
+| --- | --- |
+| โครงเว็บ | สร้างแอปด้วย React, Vite และ React Router รวม 8 หน้า: Home, Team, Profile, Projects, Chat, Settings, Contact และหน้า 404 |
+| ธีมและการออกแบบ | ออกแบบหน้าเว็บในธีมแฟ้มคดีนักสืบ ทั้งสี ฟอนต์ และ CSS รวมธีม Victorian บรรยากาศฉาก (ใยแมงมุม รอยหมึก) และหน้าทางเข้า (Case Entry) |
+| หน้าแชต | สร้างห้อง Interrogation Room ส่งข้อความ เก็บประวัติแต่ละ session แสดงสถานะรอและข้อผิดพลาด ปุ่มแชตลอย และแสดงคำตอบของ AI แบบ Markdown (ตัวหนา รายการ) |
+| การเรียก BE | รวมการเรียก API ไว้ที่ `api.js` จุดเดียว มี timeout 90 วินาทีรองรับตอน BE แบบ Free ยังหลับอยู่ |
+| ตั้งค่า | ระบบสลับธีม และสลับภาษาไทย/อังกฤษ (`settings.jsx`, `i18n.js`) |
+| รองรับมือถือ | จัด layout สำหรับจอแคบ เช่น เมนูแฮมเบอร์เกอร์ |
+| ข้อมูลจำลอง | เตรียม mock data (`mockApi.js`) ให้พัฒนา FE ได้ก่อนที่ BE พร้อม |
 
 ## ฟีเจอร์
 
-- Portfolio: หน้าแรก, ทีมและสมาชิก, หน้าโปรไฟล์รายคน (ประวัติ ทักษะ ผลงาน ช่องทางติดต่อ), โปรเจกต์ทั้งหมด, ติดต่อ
-- Chat AI (Interrogation Room): ถามเรื่องกลุ่มและสมาชิก AI ตอบจากข้อมูลใน portfolio.json เท่านั้น ถ้าไม่มีข้อมูลจะบอกตรงๆ ไม่แต่งเรื่อง และจำบริบทการสนทนาล่าสุด
-- ประวัติแชต: เก็บในฐานข้อมูล PostgreSQL ผูกกับ sessionId ของแต่ละเบราว์เซอร์ รีเฟรชแล้วประวัติยังอยู่
-- ตั้งค่า: สลับธีม 3 แบบ และสลับภาษาไทย/อังกฤษ
-- รองรับมือถือ
-- CI/CD: push เข้า main แล้วระบบทดสอบและ deploy ให้อัตโนมัติ
+- **Portfolio**: หน้าแรก, ทีมและสมาชิก, หน้าโปรไฟล์รายคน (ประวัติ ทักษะ ผลงาน ช่องทางติดต่อ), โปรเจกต์ทั้งหมด, ติดต่อ
+- **Chat AI (Interrogation Room)**: ถามเรื่องกลุ่มและสมาชิก AI ตอบจากข้อมูลใน `portfolio.json` เท่านั้น ถ้าไม่มีข้อมูลจะบอกตรงๆ ไม่แต่งเรื่อง จำบริบทการสนทนาล่าสุด และตอบเป็นภาษาเดียวกับที่ผู้ใช้ถาม (ไทยหรืออังกฤษ)
+- **ประวัติแชต**: เก็บในฐานข้อมูล PostgreSQL ผูกกับ `sessionId` ของแต่ละเบราว์เซอร์ รีเฟรชแล้วประวัติยังอยู่
+- **ตั้งค่า**: สลับธีมและสลับภาษาไทย/อังกฤษ
+- **รองรับมือถือ**
+- **CI/CD**: push เข้า `main` แล้วระบบทดสอบและ deploy ให้อัตโนมัติ
 
 ## Tech Stack
 
@@ -39,7 +64,7 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 | Frontend | React, Vite, React Router |
 | Backend | Node.js, Express |
 | Database | PostgreSQL บน Neon |
-| AI | Google Gemini API (@google/genai) โมเดลตั้งผ่าน GEMINI_MODEL |
+| AI | Google Gemini API (`@google/genai`) โมเดลตั้งผ่าน `GEMINI_MODEL` |
 | CI/CD | GitHub Actions |
 | Hosting | Render (Web Service สำหรับ BE, Static Site สำหรับ FE) |
 
@@ -54,7 +79,7 @@ flowchart TD
     BE --> D[("PostgreSQL บน Neon<br/>ประวัติแชต")]
 ```
 
-ลำดับการทำงานของแชต: FE ส่ง { sessionId, message } ไป POST /api/chat → BE ดึงประวัติล่าสุดของ session จาก DB → ส่งข้อมูล Portfolio + ประวัติ + คำถามให้ Gemini → บันทึกคำถามและคำตอบลง DB → ส่ง { reply } กลับ
+ลำดับการทำงานของแชต: FE ส่ง `{ sessionId, message }` ไป `POST /api/chat` → BE ดึงประวัติล่าสุดของ session จาก DB → ส่งข้อมูล Portfolio + ประวัติ + คำถามให้ Gemini → บันทึกคำถามและคำตอบลง DB → ส่ง `{ reply }` กลับ
 
 ```mermaid
 sequenceDiagram
@@ -74,6 +99,8 @@ sequenceDiagram
 ```
 
 ## โครงสร้างโปรเจกต์
+
+```
 .
 ├─ BE/
 │  ├─ index.js         # Express server, API, เรียก Gemini
@@ -91,6 +118,7 @@ sequenceDiagram
 ├─ .github/workflows/
 │  └─ ci-cd.yml        # pipeline CI/CD
 └─ README.md
+```
 
 ## เริ่มต้นใช้งาน (รันในเครื่อง)
 
@@ -100,7 +128,7 @@ sequenceDiagram
 - ฐานข้อมูล PostgreSQL (ใช้ connection string ของ Neon ได้)
 - Gemini API key จาก https://aistudio.google.com
 
-## 1) Backend
+### 1) Backend
 
 ```bash
 git clone https://github.com/teeranai-teer/AIE312-404-Brain-not-found.git
@@ -112,79 +140,82 @@ cp .env.example .env
 npm install
 npm start
 ```
-BE รันที่ http://localhost:3000 ลองตรวจ:
+
+BE รันที่ `http://localhost:3000` ลองตรวจ:
+
 ```bash
 curl http://localhost:3000/health
 ```
 
-ตารางในฐานข้อมูล (conversations, messages) ต้องมีอยู่ก่อนเริ่มใช้แชต ดู SQL สร้างตารางด้านล่าง
+ตารางในฐานข้อมูล (`conversations`, `messages`) ต้องมีอยู่ก่อนเริ่มใช้แชต ดู SQL สร้างตารางในหัวข้อ "ฐานข้อมูล"
 
-## 2) Frontend
+### 2) Frontend
+
 ```bash
-    cd FE
-    cp .env.example .env      # แล้วตั้ง VITE_API_URL
-    npm install
-    npm run dev
+cd FE
+cp .env.example .env      # แล้วตั้ง VITE_API_URL
+npm install
+npm run dev
 ```
 
-เปิด http://localhost:5173
-- ถ้า ไม่ตั้ง VITE_API_URL FE จะใช้ข้อมูลจำลอง (mock) ไม่เรียก BE
-- ชี้ไป BE ในเครื่อง: VITE_API_URL=http://localhost:3000 (และตั้ง FRONTEND_URL= http://localhost:5173 ใน BE/.env)
-- ชี้ไป BE บน Render: VITE_API_URL= https://aie312-404-brain-not-found-be.onrender.com
+เปิด `http://localhost:5173`
 
-ค่า VITE_ ถูกฝังตอน build/เริ่ม dev server ถ้าแก้ .env ต้องรีสตาร์ท
+- ถ้าไม่ตั้ง `VITE_API_URL` FE จะใช้ข้อมูลจำลอง (mock) ไม่เรียก BE
+- ชี้ไป BE ในเครื่อง: `VITE_API_URL=http://localhost:3000` (และตั้ง `FRONTEND_URL=http://localhost:5173` ใน `BE/.env`)
+- ชี้ไป BE บน Render: `VITE_API_URL=https://aie312-404-brain-not-found-be.onrender.com`
+
+ค่า `VITE_` ถูกฝังตอน build/เริ่ม dev server ถ้าแก้ `.env` ต้องรีสตาร์ท
 
 ## Environment Variables
 
-### Backend (BE/.env หรือหน้า Environment ของ service บน Render)
+### Backend (`BE/.env` หรือหน้า Environment ของ service บน Render)
 
 | ตัวแปร | คำอธิบาย |
 | --- | --- |
-| DATABASE_URL | connection string ของ PostgreSQL ขึ้นต้นด้วย postgresql:// |
-| GEMINI_API_KEY | API key ของ Gemini |
-| GEMINI_MODEL | ชื่อโมเดล Gemini ที่ใช้ (ถ้าเจอ error 404 ให้ตรวจชื่อโมเดลล่าสุด) |
-| FRONTEND_URL | ที่อยู่เว็บ FE สำหรับ CORS ไม่มี / ท้าย ถ้าไม่ตั้ง BE จะยอมทุกเว็บ |
-| PORT | พอร์ตของ BE (ค่าเริ่มต้น 3000, Render กำหนดให้เอง) |
+| `DATABASE_URL` | connection string ของ PostgreSQL ขึ้นต้นด้วย `postgresql://` |
+| `GEMINI_API_KEY` | API key ของ Gemini |
+| `GEMINI_MODEL` | ชื่อโมเดล Gemini ที่ใช้ (ถ้าเจอ error 404 ให้ตรวจชื่อโมเดลล่าสุด) |
+| `FRONTEND_URL` | ที่อยู่เว็บ FE สำหรับ CORS ไม่มี `/` ท้าย ถ้าไม่ตั้ง BE จะยอมทุกเว็บ |
+| `PORT` | พอร์ตของ BE (ค่าเริ่มต้น 3000, Render กำหนดให้เอง) |
 
-### Frontend (FE/.env หรือ Environment ของ Static Site บน Render)
+### Frontend (`FE/.env` หรือ Environment ของ Static Site บน Render)
 
 | ตัวแปร | คำอธิบาย |
 | --- | --- |
-| VITE_API_URL | URL ของ BE ไม่มี / ท้าย (https://aie312-404-brain-not-found-be.onrender.com) |
+| `VITE_API_URL` | URL ของ BE ไม่มี `/` ท้าย เช่น `https://aie312-404-brain-not-found-be.onrender.com` |
 
-ไฟล์ตัวอย่างอยู่ที่ BE/.env.example และ FE/.env.example ห้าม commit ไฟล์ .env จริง (อยู่ใน .gitignore แล้ว)
+ไฟล์ตัวอย่างอยู่ที่ `BE/.env.example` และ `FE/.env.example` ห้าม commit ไฟล์ `.env` จริง (อยู่ใน `.gitignore` แล้ว)
 
 ## ฐานข้อมูล
+
 ใช้ PostgreSQL 2 ตาราง:
 
 ```sql
 CREATE TABLE conversations (
   id SERIAL PRIMARY KEY,
-  session_id TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  session_id VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE messages (
   id SERIAL PRIMARY KEY,
   conversation_id INTEGER REFERENCES conversations(id),
-  role TEXT NOT NULL,          -- 'user' หรือ 'model'
+  role VARCHAR(20) NOT NULL,   -- 'user' หรือ 'assistant'
   content TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMP DEFAULT NOW()
 );
 ```
-
-> โครงสร้างข้างบนเขียนตามคอลัมน์ที่ใช้งานจริง ถ้า schema ใน Neon ของคุณต่างจากนี้ (ชนิดข้อมูลหรือ constraint) ให้แก้ให้ตรงของจริงก่อนส่ง
 
 ## API
 
 | Method | Path | คำอธิบาย |
 | --- | --- | --- |
-| GET | /health | ตรวจสถานะ ตอบ { "status": "ok" } |
-| GET | /api/portfolio | ข้อมูลกลุ่มและสมาชิก { group, members } |
-| POST | /api/chat | ส่งข้อความให้ AI ตอบ |
-| GET | /api/history/:sessionId | ประวัติแชตของ session |
+| GET | `/health` | ตรวจสถานะ ตอบ `{ "status": "ok" }` |
+| GET | `/api/portfolio` | ข้อมูลกลุ่มและสมาชิก `{ group, members }` |
+| POST | `/api/chat` | ส่งข้อความให้ AI ตอบ |
+| GET | `/api/history/:sessionId` | ประวัติแชตของ session |
 
-## POST /api/chat
+### POST `/api/chat`
 
 **Request**
 
@@ -197,34 +228,46 @@ CREATE TABLE messages (
 ```json
 { "reply": "ข้อความคำตอบจาก AI" }
 ```
-ข้อผิดพลาดตอบเป็น { "error": "ข้อความภาษาไทย" } เช่น 400 เมื่อไม่มี message หรือ sessionId
-GET /api/history/:sessionId ตอบ { "messages": [{ "role": "user", "content": "..." }] }
+
+ข้อผิดพลาดตอบเป็น `{ "error": "ข้อความภาษาไทย" }` เช่น 400 เมื่อไม่มี `message` หรือ `sessionId`
+
+### GET `/api/history/:sessionId`
+
+ตอบ `{ "messages": [{ "role": "user", "content": "..." }] }`
 
 ## AI ตอบจากข้อมูลอะไร
 
-BE อ่าน BE/portfolio.json แล้วส่งให้ Gemini เป็น system prompt พร้อมกำหนดบทบาท Detective AI ให้ตอบจากข้อมูลนี้เท่านั้น คำถามนอกขอบเขตหรือไม่มีข้อมูลจะได้คำตอบว่าไม่มีหลักฐาน ข้อมูลเดียวกันนี้ถูกใช้แสดงในหน้า Team, โปรไฟล์ และ Projects ของเว็บด้วย ถ้าต้องการแก้ข้อมูลสมาชิกหรือผลงาน แก้ที่ portfolio.json ที่เดียว
+BE อ่าน `BE/portfolio.json` แล้วส่งให้ Gemini เป็น system prompt พร้อมกำหนดบทบาท Detective AI ให้ตอบจากข้อมูลนี้เท่านั้น คำถามนอกขอบเขตหรือไม่มีข้อมูลจะได้คำตอบว่าไม่มีหลักฐาน
+
+- ตอบเป็นภาษาเดียวกับข้อความล่าสุดของผู้ใช้
+- เมื่อกล่าวถึงสมาชิกครั้งแรก ใช้ชื่อเต็มตามด้วยชื่อเล่นในวงเล็บ เช่น Suppakorn Sangjan (Peem)
+
+ข้อมูลเดียวกันนี้ถูกใช้แสดงในหน้า Team, โปรไฟล์ และ Projects ของเว็บด้วย ถ้าต้องการแก้ข้อมูลสมาชิกหรือผลงาน แก้ที่ `portfolio.json` ที่เดียว
 
 ## Testing
 
-``` bash 
+```bash
 cd BE
 npm install
 node --check index.js              # ตรวจ syntax
 node --test api.test.js server.test.js
 ```
-เทสต์ 11 ข้อ (api.test.js 4 ข้อ, server.test.js 7 ข้อ) ไม่ต้องใช้ฐานข้อมูลหรือ API key จริง ครอบคลุม /health, /api/portfolio, กรณีส่งข้อมูลไม่ครบ, JSON ที่พัง, ข้อความว่างหรือยาวเกิน, เส้นทางที่ไม่มี และ CORS
+
+เทสต์ 11 ข้อ (`api.test.js` 4 ข้อ, `server.test.js` 7 ข้อ) ไม่ต้องใช้ฐานข้อมูลหรือ API key จริง ครอบคลุม `/health`, `/api/portfolio`, กรณีส่งข้อมูลไม่ครบ, JSON ที่พัง, ข้อความว่างหรือยาวเกิน, เส้นทางที่ไม่มี และ CORS
 
 > ส่วนที่ต้องใช้ Gemini และฐานข้อมูลจริง (แชตสำเร็จ, บันทึกและดึงประวัติ) ทดสอบด้วยมือบนเว็บจริง
 
 ฝั่ง FE ตรวจด้วย build:
-``` bash 
-    cd FE
-    npm install
-    npm run build
+
+```bash
+cd FE
+npm install
+npm run build
 ```
+
 ## CI/CD
 
-ใช้ GitHub Actions ไฟล์ .github/workflows/ci-cd.yml ทำงานทุกครั้งที่ push และทุก Pull Request เข้า main
+ใช้ GitHub Actions ไฟล์ `.github/workflows/ci-cd.yml` ทำงานทุกครั้งที่ push และทุก Pull Request เข้า `main`
 
 ```mermaid
 flowchart LR
@@ -237,53 +280,55 @@ flowchart LR
     D --> F["BE บน Render<br/>build + restart"]
     E --> G["FE บน Render<br/>build + publish"]
 ```
-deploy-be และ deploy-fe ทำงานเฉพาะตอน push เข้า main ส่วน Pull Request จะรันแค่ test-be กับ test-fe
+
+`deploy-be` และ `deploy-fe` ทำงานเฉพาะตอน push เข้า `main` ส่วน Pull Request จะรันแค่ `test-be` กับ `test-fe`
 
 | Job | ทำอะไร | ทำงานเมื่อ |
 | --- | --- | --- |
-| test-be | ตรวจ syntax, สตาร์ท server ยิง /health, รันเทสต์ | ทุก push และ PR |
-| test-fe | ติดตั้งและ npm run build | ทุก push และ PR |
-| deploy-be | เรียก Deploy Hook ให้ Render deploy BE | push เข้า main และ test ผ่านทั้งสองฝั่ง |
-| deploy-fe | เรียก Deploy Hook ให้ Render deploy FE | push เข้า main และ test ผ่านทั้งสองฝั่ง |
+| `test-be` | ตรวจ syntax, สตาร์ท server ยิง `/health`, รันเทสต์ | ทุก push และ PR |
+| `test-fe` | ติดตั้งและ `npm run build` | ทุก push และ PR |
+| `deploy-be` | เรียก Deploy Hook ให้ Render deploy BE | push เข้า `main` และ test ผ่านทั้งสองฝั่ง |
+| `deploy-fe` | เรียก Deploy Hook ให้ Render deploy FE | push เข้า `main` และ test ผ่านทั้งสองฝั่ง |
 
 ถ้า test ตัวใดไม่ผ่าน job deploy จะไม่ทำงาน โค้ดที่มีปัญหาจึงไม่ถูกนำขึ้นเว็บจริง
 
-## GitHub Secrets (Settings → Secrets and variables → Actions)
+### GitHub Secrets (Settings → Secrets and variables → Actions)
 
 | ชื่อ | ค่า |
 | --- | --- |
-| RENDER_DEPLOY_HOOK_BE | Deploy Hook URL ของ BE บน Render |
-| RENDER_DEPLOY_HOOK_FE | Deploy Hook URL ของ FE บน Render |
+| `RENDER_DEPLOY_HOOK_BE` | Deploy Hook URL ของ BE บน Render |
+| `RENDER_DEPLOY_HOOK_FE` | Deploy Hook URL ของ FE บน Render |
 
-ค่า DATABASE_URL และ GEMINI_API_KEY ไม่อยู่ใน pipeline ตั้งไว้ที่หน้า Environment ของ service บน Render
+ค่า `DATABASE_URL` และ `GEMINI_API_KEY` ไม่อยู่ใน pipeline ตั้งไว้ที่หน้า Environment ของ service บน Render
 
 ## Deployment (Render)
+
 ### Backend: Web Service
 
 | ช่อง | ค่า |
 | --- | --- |
-| Source | Public Git Repository (repo นี้, branch main) |
-| Root Directory | BE |
-| Build Command | npm install |
-| Start Command | npm start |
-| Environment | DATABASE_URL, GEMINI_API_KEY, GEMINI_MODEL, NODE_VERSION=22 |
+| Source | Public Git Repository (repo นี้, branch `main`) |
+| Root Directory | `BE` |
+| Build Command | `npm install` |
+| Start Command | `npm start` |
+| Environment | `DATABASE_URL`, `GEMINI_API_KEY`, `GEMINI_MODEL`, `NODE_VERSION=22` |
 
 ### Frontend: Static Site
 
 | ช่อง | ค่า |
 | --- | --- |
-| Root Directory | FE |
-| Build Command | npm install && npm run build |
-| Publish Directory | dist |
-| Environment | VITE_API_URL = URL ของ BE |
-| Redirects/Rewrites | /* → /index.html (Action: Rewrite) เพื่อให้รีเฟรชหน้าย่อยได้ |
+| Root Directory | `FE` |
+| Build Command | `npm install && npm run build` |
+| Publish Directory | `dist` |
+| Environment | `VITE_API_URL` = URL ของ BE |
+| Redirects/Rewrites | `/*` → `/index.html` (Action: Rewrite) เพื่อให้รีเฟรชหน้าย่อยได้ |
 
-จากนั้นคัดลอก Deploy Hook ของทั้งสอง service (Settings → Deploy Hook) ไปตั้งใน GitHub Secrets ต่อจากนี้ทุกครั้งที่ push เข้า main เว็บจะอัปเดตเอง
+จากนั้นคัดลอก Deploy Hook ของทั้งสอง service (Settings → Deploy Hook) ไปตั้งใน GitHub Secrets ต่อจากนี้ทุกครั้งที่ push เข้า `main` เว็บจะอัปเดตเอง
 
 ## Troubleshooting
 
-| ชื่อ error หรืออาการ | สาเหตุที่พบบ่อย | วิธีแก้ |
-|---|---|---|
+| อาการ | สาเหตุที่พบบ่อย | วิธีแก้ |
+| --- | --- | --- |
 | เปิดเว็บแล้วรอนานหรือขึ้น "โหลดข้อมูลไม่สำเร็จ" | BE แบบ Free กำลังหลับ | รอ 30-60 วินาทีแล้วกดลองใหม่ |
 | แชตตอบ error | `GEMINI_API_KEY` ผิด ชื่อโมเดลไม่ถูกต้อง หรือโควตาเต็ม | ดู Logs ของ BE แล้วตรวจค่าใน Environment |
 | รีเฟรชหน้า `/chat` แล้ว 404 | ยังไม่ได้ตั้ง Rewrite ของ Static Site | เพิ่มกฎ `/*` → `/index.html` |
@@ -294,4 +339,4 @@ deploy-be และ deploy-fe ทำงานเฉพาะตอน push เ�
 ## สิ่งที่ยังไม่ได้ทำ
 
 - Docker, Docker Hub และการสแกนช่องโหว่ด้วย Trivy (ไม่อยู่ในข้อกำหนดของโจทย์)
-- จำกัดจำนวนการเรียก /api/chat (rate limit)
+- จำกัดจำนวนการเรียก `/api/chat` (rate limit)

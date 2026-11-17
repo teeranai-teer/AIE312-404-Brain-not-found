@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSettings } from '../settings.jsx';
-import { sendMessage, getHistory, errorText, USE_MOCK } from '../api.js';
+import { sendMessage, getHistory, deleteHistory, errorText, USE_MOCK } from '../api.js';
 import RichText from '../components/RichText.jsx';
 import {
   loadSessions,
@@ -84,6 +84,25 @@ export default function Chat() {
     inputRef.current?.focus();
   };
 
+    // ลบห้องแชต: ลบใน DB ก่อน แล้วค่อยเอาออกจากรายการในเบราว์เซอร์
+  // ถ้าลบห้องที่เปิดอยู่ จะสลับไปห้องแรกที่เหลือ ถ้าไม่เหลือเลยจะสร้างห้องใหม่ให้
+  const deleteSession = async (id) => {
+    if (sending) return;
+    if (!window.confirm('ลบการสนทนานี้ถาวรใช่ไหม? ข้อความทั้งหมดในห้องนี้จะหายและกู้คืนไม่ได้')) return;
+    try {
+      await deleteHistory(id);
+    } catch (err) {
+      window.alert(errorText(err, t)); // ลบไม่สำเร็จ ไม่แตะรายการ ผู้ใช้ลองใหม่ได้
+      return;
+    }
+    setState((prev) => {
+      let rest = prev.sessions.filter((s) => s.id !== id);
+      if (rest.length === 0) rest = [createSession()];
+      const nextActive = prev.activeId === id ? rest[0].id : prev.activeId;
+      return { sessions: rest, activeId: nextActive };
+    });
+  };
+
   const send = async (raw) => {
     const text = raw.trim();
     if (!text || sending || history.status !== 'ready') return; // กันส่งว่าง / กดซ้ำ
@@ -139,16 +158,26 @@ export default function Chat() {
           <div className="type sidebar-label">{t('caseHistory')}</div>
           <div className="history">
             {sessions.map((s, i) => (
-              <button
-                key={s.id}
-                className={`history-item${s.id === activeId ? ' active' : ''}`}
-                aria-current={s.id === activeId}
-                onClick={() => selectSession(s.id)}
-                disabled={sending && s.id !== activeId}
-              >
-                <span className="case-no">CASE {caseNo(i)}</span>
-                {s.title || t('newCaseTitle')}
-              </button>
+              <div className="history-row" key={s.id}>
+                <button
+                  className={`history-item${s.id === activeId ? ' active' : ''}`}
+                  aria-current={s.id === activeId}
+                  onClick={() => selectSession(s.id)}
+                  disabled={sending && s.id !== activeId}
+                >
+                  <span className="case-no">CASE {caseNo(i)}</span>
+                  {s.title || t('newCaseTitle')}
+                </button>
+                <button
+                  className="history-del"
+                  onClick={() => deleteSession(s.id)}
+                  disabled={sending}
+                  aria-label="ลบการสนทนา"
+                  title="ลบการสนทนา"
+                >
+                  ✕
+                </button>
+              </div>
             ))}
           </div>
         </aside>

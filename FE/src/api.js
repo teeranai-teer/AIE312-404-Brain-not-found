@@ -59,3 +59,11 @@ export function getHistory(sessionId) {
   if (USE_MOCK) return mock.getHistory(sessionId);
   return request(`/api/history/${encodeURIComponent(sessionId)}`);
 }
+
+// DELETE /api/history/:sessionId → { deleted: true | false }
+// ลบประวัติแชตของห้องนี้ทั้งห้องใน DB (ถ้าไม่มีห้องนี้ก็ถือว่าสำเร็จ)
+// โหมดข้อมูลจำลอง (ไม่ได้ตั้ง VITE_API_URL) ไม่มี BE ให้ลบ จึงตอบสำเร็จทันที
+export function deleteHistory(sessionId) {
+  if (USE_MOCK) return Promise.resolve({ deleted: true });
+  return request(`/api/history/${encodeURIComponent(sessionId)}`, { method: 'DELETE' });
+}

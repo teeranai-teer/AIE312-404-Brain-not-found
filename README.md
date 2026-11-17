@@ -65,7 +65,7 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 | Backend | Node.js, Express |
 | Database | PostgreSQL บน Neon |
 | AI | Google Gemini API (`@google/genai`) โมเดลตั้งผ่าน `GEMINI_MODEL` |
-| CI/CD | GitHub Actions |
+| CI/CD | GitHub Actions, Docker, Trivy |
 | Hosting | Render (Web Service สำหรับ BE, Static Site สำหรับ FE) |
 
 ## สถาปัตยกรรม
@@ -108,11 +108,16 @@ sequenceDiagram
 │  ├─ portfolio.json   # ข้อมูลกลุ่มและสมาชิก (แหล่งข้อมูลของ AI และของหน้าเว็บ)
 │  ├─ api.test.js      # เทสต์ endpoint
 │  ├─ server.test.js   # เทสต์พฤติกรรมของ server
+│  ├─ Dockerfile       # build image ของ BE
+│  ├─ .dockerignore    # กัน .env และไฟล์ทดสอบไม่ให้เข้า image
 │  ├─ .env.example
 │  └─ package.json
 ├─ FE/
 │  ├─ src/             # โค้ด React (pages, components, api.js, portfolio.jsx ฯลฯ)
 │  ├─ public/members/  # รูปสมาชิก
+│  ├─ Dockerfile       # build เว็บด้วย Vite แล้วเสิร์ฟด้วย nginx
+│  ├─ nginx.conf       # ให้รีเฟรชหน้าย่อยได้ (ส่ง index.html ให้ทุกเส้นทาง)
+│  ├─ .dockerignore
 │  ├─ .env.example
 │  └─ package.json
 ├─ .github/workflows/
@@ -280,6 +285,8 @@ flowchart LR
     C -->|ผ่านทั้งคู่| E
     D --> F["BE บน Render<br/>build + restart"]
     E --> G["FE บน Render<br/>build + publish"]
+    B --> H["docker-be<br/>build image + สแกน Trivy"]
+    C --> I["docker-fe<br/>build image + สแกน Trivy"]
 ```
 
 `deploy-be` และ `deploy-fe` ทำงานเฉพาะตอน push เข้า `main` ส่วน Pull Request จะรันแค่ `test-be` กับ `test-fe`
@@ -290,8 +297,10 @@ flowchart LR
 | `test-fe` | ติดตั้งและ `npm run build` | ทุก push และ PR |
 | `deploy-be` | เรียก Deploy Hook ให้ Render deploy BE | push เข้า `main` และ test ผ่านทั้งสองฝั่ง |
 | `deploy-fe` | เรียก Deploy Hook ให้ Render deploy FE | push เข้า `main` และ test ผ่านทั้งสองฝั่ง |
+| `docker-be` | build Docker image ของ BE (`BE/Dockerfile`) และสแกนช่องโหว่ด้วย Trivy | หลัง `test-be` ผ่าน |
+| `docker-fe` | build Docker image ของ FE (`FE/Dockerfile` build ด้วย Vite แล้วเสิร์ฟด้วย nginx) และสแกนช่องโหว่ด้วย Trivy | หลัง `test-fe` ผ่าน |
 
-ถ้า test ตัวใดไม่ผ่าน job deploy จะไม่ทำงาน โค้ดที่มีปัญหาจึงไม่ถูกนำขึ้นเว็บจริง
+ถ้า test ตัวใดไม่ผ่าน job deploy จะไม่ทำงาน โค้ดที่มีปัญหาจึงไม่ถูกนำขึ้นเว็บจริง ส่วน job `docker-*` ไม่อยู่ในสายของ deploy และ Trivy ตั้งให้แสดงรายงานช่องโหว่ (ระดับ CRITICAL และ HIGH) โดยไม่ทำให้ pipeline ล้ม
 
 ### GitHub Secrets (Settings → Secrets and variables → Actions)
 
@@ -339,6 +348,6 @@ flowchart LR
 
 ## สิ่งที่ยังไม่ได้ทำ
 
-- Docker, Docker Hub และการสแกนช่องโหว่ด้วย Trivy (ไม่อยู่ในข้อกำหนดของโจทย์)
+- push Docker image ขึ้น Docker Hub และให้ Render รันจาก image (ตอนนี้ Render build จากโค้ดโดยตรง ส่วน Docker ใช้ build และสแกนใน CI)
 - จำกัดจำนวนการเรียก `/api/chat` (rate limit)
 - แก้ไขและลบข้อความเดี่ยวในห้องแชต (ตอนนี้ลบได้ทั้งห้อง)

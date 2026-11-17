@@ -1,0 +1,7 @@
+node_modules
+.env
+.env.*
+!.env.example
+test-db.js
+test-gemini.js
+*.test.js

@@ -146,3 +146,42 @@ jobs:
         env:
           # ดึงค่าจาก GitHub Secrets ค่านี้จะถูกซ่อนใน log
           DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_FE }}
+
+
+  # ================= DOCKER =================
+  # build Docker image พิสูจน์ว่า Dockerfile ใช้ได้ และสแกนช่องโหว่ด้วย Trivy
+  # job กลุ่มนี้ไม่อยู่ในสายของ deploy (deploy-be/deploy-fe ไม่รอ) ถ้าพลาดเว็บจริงยัง deploy ตามปกติ
+
+  # ---------- Docker ของ BE ----------
+  docker-be:
+    needs: test-be                 # รอให้เทสต์ของ BE ผ่านก่อน
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # build image จาก BE/Dockerfile
+      - name: build image BE
+        run: docker build -t brain-be ./BE
+
+      # สแกนช่องโหว่ด้วย Trivy (รันเป็น container) แสดงเฉพาะระดับ CRITICAL และ HIGH
+      # --exit-code 0 = ถ้าเจอช่องโหว่ให้แสดงรายงานอย่างเดียว ไม่ทำให้ job แดง
+      - name: สแกนช่องโหว่ BE ด้วย Trivy
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 0 brain-be
+
+  # ---------- Docker ของ FE ----------
+  docker-fe:
+    needs: test-fe                 # รอให้ build ของ FE ผ่านก่อน
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # build image จาก FE/Dockerfile (build เว็บด้วย Vite แล้วเสิร์ฟด้วย nginx)
+      - name: build image FE
+        run: docker build -t brain-fe ./FE
+
+      - name: สแกนช่องโหว่ FE ด้วย Trivy
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 0 brain-fe

@@ -20,7 +20,7 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 
 | ชื่อ-นามสกุล | บทบาท | ความรับผิดชอบ | GitHub |
 | --- | --- | --- | --- |
-| Teernai Teeraparpvongsa (Tonn) | Backend Developer | Express API, ฐานข้อมูล PostgreSQL บน Neon, เชื่อม Gemini และเขียน system prompt, CI/CD, deploy | teeranai-teer |
+| Teeranai Teeraparpvongsa (Tonn) | Backend Developer | Express API, ฐานข้อมูล PostgreSQL บน Neon, เชื่อม Gemini และเขียน system prompt, CI/CD, deploy | teeranai-teer |
 | Suppakorn Sangjan (Peem) | Frontend Developer | ออกแบบและพัฒนาหน้าเว็บด้วย React, ห้องแชต, รองรับมือถือ, เชื่อมกับ Backend | Peem040 |
 
 ## ฟีเจอร์

@@ -129,12 +129,12 @@ ${JSON.stringify(aiPortfolio, null, 2)}
 - ชื่อโปรเจกต์ใช้ตามต้นฉบับ
 - ห้ามเรียกสมาชิกด้วยชื่อเล่นเพียงอย่างเดียวในการกล่าวถึงครั้งแรก ต้องใช้ชื่อเต็มจากฟิลด์ name ตามด้วยชื่อเล่นในวงเล็บเสมอ
   Frontend: Suppakorn Sangjan (Peem)
-  Backend และ AI: Teernai Teeraparpvongsa (Tonn)
+  Backend และ AI: Teeranai Teeraparpvongsa (Tonn)
 - หลังกล่าวถึงครั้งแรกในคำตอบนั้นแล้ว ใช้ชื่อเล่นได้
 
 Example (English):
 User: Who handles the backend?
-AI: "According to the case file, the backend and AI are handled by Teernai Teeraparpvongsa (Tonn)."
+AI: "According to the case file, the backend and AI are handled by Teeranai Teeraparpvongsa (Tonn)."
 `;
 
 app.get('/health', (req, res) => {

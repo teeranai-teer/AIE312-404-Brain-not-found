@@ -27,7 +27,7 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 
 | งาน | รายละเอียด |
 | --- | --- |
-| Backend API | สร้าง Express server และ endpoint `/health`, `/api/portfolio`, `/api/chat`, `/api/history/:sessionId` ตรวจข้อมูลที่ส่งเข้ามา (ไม่มีข้อความ ข้อความว่าง ข้อความยาวเกิน 1,000 ตัวอักษร ไม่มี `sessionId`) และตอบ error เป็นภาษาไทย |
+| Backend API | สร้าง Express server และ endpoint `/health`, `/api/portfolio`, `/api/chat`, `/api/history/:sessionId` (ดึงและลบประวัติแชต) ตรวจข้อมูลที่ส่งเข้ามา (ไม่มีข้อความ ข้อความว่าง ข้อความยาวเกิน 1,000 ตัวอักษร ไม่มี `sessionId`) และตอบ error เป็นภาษาไทย |
 | ฐานข้อมูล | ออกแบบตาราง `conversations` และ `messages` บน PostgreSQL (Neon) เก็บประวัติแชตแยกตาม session เชื่อมต่อผ่าน `db.js` |
 | AI | เชื่อม Gemini API เขียน system prompt ให้ Detective AI ตอบจากข้อมูลใน `portfolio.json` เท่านั้น ไม่แต่งเรื่อง ส่งประวัติแชตล่าสุดเพื่อให้จำบริบท ตอบตามภาษาของผู้ใช้ ใช้ชื่อเต็มพร้อมชื่อเล่น และจัดการกรณี Gemini ไม่ว่างหรือผิดพลาด |
 | ข้อมูล Portfolio | จัดทำ `portfolio.json` (ข้อมูลกลุ่ม สมาชิก ผลงาน) ซึ่งเป็นแหล่งข้อมูลเดียวของทั้ง AI และหน้าเว็บ |
@@ -341,3 +341,4 @@ flowchart LR
 
 - Docker, Docker Hub และการสแกนช่องโหว่ด้วย Trivy (ไม่อยู่ในข้อกำหนดของโจทย์)
 - จำกัดจำนวนการเรียก `/api/chat` (rate limit)
+- แก้ไขและลบข้อความเดี่ยวในห้องแชต (ตอนนี้ลบได้ทั้งห้อง)

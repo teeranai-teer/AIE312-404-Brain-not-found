@@ -243,6 +243,27 @@ app.get('/api/history/:sessionId', async (req, res) => {
     }
 });
 
+// ลบห้องแชตของ session นี้ทั้งห้อง (ข้อความทั้งหมดและตัวห้อง)
+// ต้องลบ messages ก่อน เพราะ messages ผูก foreign key กับ conversations
+// ถ้าไม่มีห้องนี้ ก็ตอบสำเร็จเหมือนกัน (ลบซ้ำกี่ครั้งผลก็เท่าเดิม)
+app.delete('/api/history/:sessionId', async (req, res) => {
+    try {
+        const found = await pool.query(
+            'SELECT id FROM conversations WHERE session_id = $1',
+            [req.params.sessionId]
+        );
+        const ids = found.rows.map((r) => r.id);
+        if (ids.length > 0) {
+            await pool.query('DELETE FROM messages WHERE conversation_id = ANY($1::int[])', [ids]);
+            await pool.query('DELETE FROM conversations WHERE id = ANY($1::int[])', [ids]);
+        }
+        res.json({ deleted: ids.length > 0 });
+    } catch (err) {
+        console.error('Delete history error: ', err.message);
+        res.status(500).json({ error: 'ลบประวัติไม่สำเร็จ' });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 
 // ตอนรันเทสต์ ไม่ต้องเปิดเซิร์ฟเวอร์เอง ให้ไฟล์เทสต์เปิดเองบนพอร์ตสุ่ม

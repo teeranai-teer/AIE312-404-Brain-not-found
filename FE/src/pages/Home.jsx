@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSettings } from '../settings.jsx';
 import { usePortfolio } from '../portfolio.jsx';
-import logo from '../assets/detective.png';;
+import logo from '../assets/detective.png';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -14,9 +14,11 @@ export default function Home() {
 
   return (
     <section className="view">
-      <div className="eyebrow">CLASSIFIED DOCUMENT · EVIDENCE 001</div>
+      <div className="eyebrow">COZY DETECTIVE STUDIO · CASE 001</div>
       <div className="folder-tab">CASE FILE #404</div>
-      <div className="paper stack hero">
+      <div className="paper hero">
+        <span className="cobweb topright" aria-hidden="true" />
+        <span className="cobweb bottomleft" aria-hidden="true" />
         <div>
           <div className="stamp">CONFIDENTIAL</div>
           <h1>

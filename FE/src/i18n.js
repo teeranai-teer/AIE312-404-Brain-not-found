@@ -72,6 +72,14 @@ export const dict = {
     errNetwork: 'ติดต่อเซิร์ฟเวอร์ไม่ได้ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่อีกครั้ง',
     errTimeout: 'เซิร์ฟเวอร์ตอบช้าเกินไป ลองใหม่อีกครั้ง',
     errServer: 'เซิร์ฟเวอร์มีปัญหา ลองใหม่อีกครั้งภายหลัง',
+
+    entryLabel: 'เปิดแฟ้มคดี 404 Brain Not Found',
+    entryOpen: 'เปิดแฟ้มคดี',
+    entryOpening: 'กำลังเปิดแฟ้ม…',
+    entryHint: 'คลิกแฟ้มเพื่อเข้าสู่เว็บไซต์ · กด ESC เพื่อข้าม',
+    entryCoverThai: 'แฟ้มลับทีมพัฒนานักสืบ',
+    entryWelcome: 'ยินดีต้อนรับสู่แฟ้มข้อมูลทีม 404 Brain Not Found',
+    fabLabel: 'ถามนักสืบ AI',
   },
   en: {
     navHome: 'Home',
@@ -145,5 +153,13 @@ export const dict = {
     errNetwork: 'Could not reach the server. Check your connection and try again.',
     errTimeout: 'The server took too long to respond. Please try again.',
     errServer: 'The server ran into a problem. Please try again later.',
+
+    entryLabel: 'Open the 404 Brain Not Found case file',
+    entryOpen: 'Open the case file',
+    entryOpening: 'Opening the file…',
+    entryHint: 'Click the folder to enter · Press ESC to skip',
+    entryCoverThai: 'Classified detective development team',
+    entryWelcome: 'Welcome to the 404 Brain Not Found team archive',
+    fabLabel: 'Ask the AI detective',
   },
 };

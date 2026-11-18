@@ -171,6 +171,43 @@ npm run dev
 
 ค่า `VITE_` ถูกฝังตอน build/เริ่ม dev server ถ้าแก้ `.env` ต้องรีสตาร์ท
 
+### 3) รันด้วย Docker (ทางเลือก)
+
+ต้องมี Docker ติดตั้งและเปิดอยู่ รันจากรากของ repo
+
+**Backend**
+
+```bash
+# build image ของ BE
+docker build -t brain-be ./BE
+
+# สร้างไฟล์ env สำหรับ Docker (BE/.env.docker) จาก BE/.env
+# Docker ไม่ตัดช่องว่างรอบ = และเครื่องหมายคำพูดให้เหมือน dotenv จึงต้องตัดเอง
+# ไฟล์นี้อยู่ใน .gitignore ห้าม commit
+sed -E "s/\r$//; s/^([A-Za-z_]+)[[:space:]]*=[[:space:]]*[\"']?/\1=/; s/[\"'[:space:]]+$//" BE/.env > BE/.env.docker
+
+# รัน BE ที่พอร์ต 3000
+docker run --rm -p 3000:3000 --env-file BE/.env.docker brain-be
+
+# ตรวจสถานะ (เทอร์มินัลอีกหน้าต่าง)
+curl http://localhost:3000/health
+```
+
+ไฟล์ env สำหรับ `--env-file` ต้องเป็นรูปแบบ `NAME=value` ติดกัน ไม่มีช่องว่างรอบ `=` และไม่มีเครื่องหมายคำพูดครอบค่า ไม่เช่นนั้น BE จะต่อฐานข้อมูลไม่ได้
+
+**Frontend**
+
+```bash
+# build image ของ FE ค่า VITE_API_URL ถูกฝังตอน build
+# ชี้ไป BE ในเครื่อง (ไม่ใส่ --build-arg จะใช้ BE บน Render ตามค่าเริ่มต้นใน Dockerfile)
+docker build -t brain-fe --build-arg VITE_API_URL=http://localhost:3000 ./FE
+
+# รัน แล้วเปิด http://localhost:8080
+docker run --rm -p 8080:80 brain-fe
+```
+
+ถ้าให้ FE นี้คุยกับ BE ที่รันเอง ต้องตั้ง `FRONTEND_URL=http://localhost:8080` ใน `BE/.env` มิฉะนั้น CORS จะบล็อก
+
 ## Environment Variables
 
 ### Backend (`BE/.env` หรือหน้า Environment ของ service บน Render)

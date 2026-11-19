@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { getPortfolio } from './api.js';
 
-// โหลด /api/portfolio ครั้งเดียวแล้วแชร์ให้ทุกหน้า (Home, Team, Profile, Projects, Contact)
+// โหลด /api/portfolio ครั้งเดียวแล้วแชร์ให้แฟ้มประวัติ (story/Dossier.jsx)
 const PortfolioContext = createContext(null);
 
 // แปลงข้อความเป็นรหัสที่ใช้ใน URL และ id ของ HTML ได้ เช่น "AI Concrete Optimization" -> "ai-concrete-optimization"

@@ -4,7 +4,9 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 
 ## เกี่ยวกับโปรเจกต์ (404 Brain Not Found · Chat AI Portfolio)
 
-เว็บแอป Portfolio ของกลุ่ม 404 Brain Not Found (Detective Development Team) ในธีมแฟ้มคดีนักสืบ ผู้เยี่ยมชมดูข้อมูลทีมและสมาชิกแต่ละคน หรือพูดคุยกับ Detective AI ที่ตอบจากข้อมูล Portfolio จริงของสมาชิกทุกคน
+เว็บแอป Portfolio ของกลุ่ม 404 Brain Not Found (Detective Development Team) เป็นหน้าเดียวแบบ interactive ในธีมสำนักงานนักสืบยุควิกตอเรีย ผู้เยี่ยมชมเดินเรื่องผ่านฉากวิดีโอ (เมือง → ประตู → ห้องนักสืบ) แล้วเลือกได้ว่าจะคุยกับ Detective AI ที่ตอบจากข้อมูล Portfolio จริงของสมาชิก ดูแฟ้มประวัติของสมาชิกแต่ละคน หรือดูใบประกาศจับ
+
+ข้อมูลสมาชิกในแฟ้มประวัติและคำตอบของ AI มาจาก `BE/portfolio.json` แหล่งเดียว ผ่าน API ของ Backend
 
 ## Live demo
 
@@ -21,7 +23,7 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 | ชื่อ-นามสกุล | บทบาท | ความรับผิดชอบ | GitHub |
 | --- | --- | --- | --- |
 | Teeranai Teeraparpvongsa (Tonn) | Backend Developer | Express API, ฐานข้อมูล PostgreSQL บน Neon, เชื่อม Gemini และเขียน system prompt, CI/CD, deploy | [teeranai-teer](https://github.com/teeranai-teer) |
-| Suppakorn Sangjan (Peem) | Frontend Developer | Frontend ทั้งหมด: ออกแบบและพัฒนาเว็บด้วย React + Vite + React Router (หน้าแรก ทีม โปรไฟล์ โปรเจกต์ แชต ตั้งค่า ติดต่อ), ธีมนักสืบ (รวมธีม Victorian และหน้าทางเข้า), ห้องแชตและการแสดงคำตอบแบบ Markdown, ระบบสลับธีมและภาษาไทย/อังกฤษ, รองรับมือถือ, เชื่อมกับ Backend | [Peem040](https://github.com/Peem040) |
+| Suppakorn Sangjan (Peem) | Frontend Developer | Frontend: วางโครงแอป React + Vite, ชั้นเรียก API (`api.js`), การเก็บห้องแชต (`sessions.js`), การแสดงคำตอบ AI แบบ Markdown (`RichText.jsx`), ข้อมูลจำลอง (`mockApi.js`) และหน้าเว็บรุ่นแรกแบบหลายหน้า | [Peem040](https://github.com/Peem040) |
 
 ### งานของ Teeranai (Tonn): Backend, Database, AI, CI/CD
 
@@ -34,34 +36,38 @@ AI-powered detective-themed team portfolio website built with React, Express.js,
 | เทสต์ | เขียนเทสต์อัตโนมัติ 11 ข้อ (`api.test.js`, `server.test.js`) ที่ไม่ต้องใช้ฐานข้อมูลหรือ API key |
 | CI/CD | ตั้ง GitHub Actions: ทดสอบ BE และ FE แล้ว deploy ขึ้น Render อัตโนมัติผ่าน Deploy Hook |
 | Deploy | ตั้งค่า Render (BE เป็น Web Service, FE เป็น Static Site พร้อม Rewrite) และฐานข้อมูลบน Neon |
-| เชื่อม FE กับ BE | แก้จุดต่อข้อมูลระหว่างสองฝั่ง (`FE/src/portfolio.jsx` แปลงรูปแบบข้อมูลจาก BE) เพิ่มรูปสมาชิก ไอคอนโปรเจกต์ และโลโก้ |
+| เชื่อม FE กับ BE | แก้จุดต่อข้อมูลระหว่างสองฝั่ง (`FE/src/portfolio.jsx` แปลงรูปแบบข้อมูลจาก BE) เพิ่มรูปสมาชิก |
+| หน้าสำนักงานนักสืบ | พัฒนาหน้าเว็บใหม่หน้าเดียวเป็น React (`FE/src/story/`): ระบบเปลี่ยนฉากวิดีโอ เสียงและเพลงประกอบ แชต AI แฟ้มประวัติที่ดึงข้อมูลจาก `/api/portfolio` และใบประกาศจับ แทนหน้าเว็บรุ่นแรก |
 
 ### งานของ Suppakorn (Peem): Frontend
 
 | งาน | รายละเอียด |
 | --- | --- |
-| โครงเว็บ | สร้างแอปด้วย React, Vite และ React Router รวม 8 หน้า: Home, Team, Profile, Projects, Chat, Settings, Contact และหน้า 404 |
-| ธีมและการออกแบบ | ออกแบบหน้าเว็บในธีมแฟ้มคดีนักสืบ ทั้งสี ฟอนต์ และ CSS รวมธีม Victorian บรรยากาศฉาก (ใยแมงมุม รอยหมึก) และหน้าทางเข้า (Case Entry) |
-| หน้าแชต | สร้างห้อง Interrogation Room ส่งข้อความ เก็บประวัติแต่ละ session แสดงสถานะรอและข้อผิดพลาด ปุ่มแชตลอย และแสดงคำตอบของ AI แบบ Markdown (ตัวหนา รายการ) |
-| การเรียก BE | รวมการเรียก API ไว้ที่ `api.js` จุดเดียว มี timeout 90 วินาทีรองรับตอน BE แบบ Free ยังหลับอยู่ |
-| ตั้งค่า | ระบบสลับธีม และสลับภาษาไทย/อังกฤษ (`settings.jsx`, `i18n.js`) |
-| รองรับมือถือ | จัด layout สำหรับจอแคบ เช่น เมนูแฮมเบอร์เกอร์ |
-| ข้อมูลจำลอง | เตรียม mock data (`mockApi.js`) ให้พัฒนา FE ได้ก่อนที่ BE พร้อม |
+| โครงแอป | ตั้งโปรเจกต์ React + Vite และโครงไฟล์ของ FE |
+| การเรียก BE | รวมการเรียก API ไว้ที่ `api.js` จุดเดียว (`getPortfolio`, `sendMessage`, `getHistory`, `deleteHistory`) มี timeout 90 วินาทีรองรับตอน BE แบบ Free ยังหลับอยู่ และแปลง error เป็นข้อความไทย (`errors.js`) |
+| ห้องแชต | เก็บรายการห้อง (CASE) และห้องที่เปิดอยู่ใน localStorage (`sessions.js`) ส่วนข้อความเก็บใน DB ฝั่ง BE |
+| คำตอบของ AI | แสดงคำตอบแบบ Markdown อย่างปลอดภัย ไม่ใช้ `innerHTML` (`RichText.jsx`: ตัวหนา รายการ รายการลำดับเลข) |
+| ข้อมูลจำลอง | เตรียม mock (`mockApi.js`, `data/mockPortfolio.js`) ให้พัฒนา FE ได้โดยไม่ต้องมี BE |
+| หน้าเว็บรุ่นแรก | หน้าเว็บแบบหลายหน้า (Home, Team, Profile, Projects, Chat, Settings, Contact) พร้อมสลับธีมและภาษา ต่อมาทีมเปลี่ยนเป็นหน้าสำนักงานนักสืบหน้าเดียว โค้ดรุ่นแรกยังดูได้ในประวัติ git |
+
+> วิดีโอฉากและภาพประกอบ (ห้องนักสืบ, ปุ่ม, แฟ้มประวัติ, ใบประกาศจับ) ทีมสร้างด้วย Google Flow แล้วนำมาใช้ในหน้าเว็บ
 
 ## ฟีเจอร์
 
-- **Portfolio**: หน้าแรก, ทีมและสมาชิก, หน้าโปรไฟล์รายคน (ประวัติ ทักษะ ผลงาน ช่องทางติดต่อ), โปรเจกต์ทั้งหมด, ติดต่อ
-- **Chat AI (Interrogation Room)**: ถามเรื่องกลุ่มและสมาชิก AI ตอบจากข้อมูลใน `portfolio.json` เท่านั้น ถ้าไม่มีข้อมูลจะบอกตรงๆ ไม่แต่งเรื่อง จำบริบทการสนทนาล่าสุด และตอบเป็นภาษาเดียวกับที่ผู้ใช้ถาม (ไทยหรืออังกฤษ)
-- **ประวัติแชต**: เก็บในฐานข้อมูล PostgreSQL ผูกกับ `sessionId` ของแต่ละเบราว์เซอร์ รีเฟรชแล้วประวัติยังอยู่ และลบห้องแชตได้ด้วยปุ่ม ✕ ในแถบ CASE HISTORY
-- **ตั้งค่า**: สลับธีมและสลับภาษาไทย/อังกฤษ
-- **รองรับมือถือ**
+- **ฉากเปิดเรื่อง**: หน้าแรกกดแว่นขยาย → วิดีโอเมือง → ประตู (กดเปิดประตู) → เดินเข้าห้องนักสืบ มีปุ่มข้ามบทนำ เปลี่ยนฉากแบบเฟดไม่มีจอดำ
+- **เสียง**: เสียงในวิดีโอและเพลงประกอบเล่นวน มีปุ่มเปิด/ปิดเสียง (เบราว์เซอร์อนุญาตให้มีเสียงหลังผู้ใช้แตะหน้าเว็บครั้งแรก)
+- **ถามนักสืบ (Chat AI)**: ถามเรื่องกลุ่มและสมาชิก AI ตอบจากข้อมูลใน `portfolio.json` เท่านั้น ถ้าไม่มีข้อมูลจะบอกตรงๆ จำบริบทการสนทนาล่าสุด และตอบเป็นภาษาเดียวกับที่ผู้ใช้ถาม (ไทยหรืออังกฤษ) มีคำถามแนะนำ
+- **ประวัติแชต**: เก็บในฐานข้อมูล PostgreSQL ผูกกับ `sessionId` ของแต่ละห้อง สร้างห้องใหม่ สลับห้อง และลบห้องได้ในแถบ CASE HISTORY รีเฟรชแล้วประวัติยังอยู่
+- **ประวัติของนักสืบ**: แฟ้มประวัติของสมาชิก 2 หน้า (AGENT-002, AGENT-001) ข้อมูลชื่อ ตำแหน่ง ประวัติ ทักษะ ผลงาน อีเมล GitHub และรูป ดึงจาก `/api/portfolio`
+- **ใบประกาศจับ**: วิดีโอแล้วแสดงใบประกาศเต็มจอ
+- **รองรับมือถือ**: จอแนวตั้งย้ายปุ่มลงด้านล่าง แชตและแฟ้มขยายเต็มความกว้าง
 - **CI/CD**: push เข้า `main` แล้วระบบทดสอบและ deploy ให้อัตโนมัติ
 
 ## Tech Stack
 
 | ส่วน | เทคโนโลยี/เครื่องมือที่ใช้ |
 | --- | --- |
-| Frontend | React, Vite, React Router |
+| Frontend | React, Vite |
 | Backend | Node.js, Express |
 | Database | PostgreSQL บน Neon |
 | AI | Google Gemini API (`@google/genai`) โมเดลตั้งผ่าน `GEMINI_MODEL` |
@@ -113,10 +119,23 @@ sequenceDiagram
 │  ├─ .env.example
 │  └─ package.json
 ├─ FE/
-│  ├─ src/             # โค้ด React (pages, components, api.js, portfolio.jsx ฯลฯ)
+│  ├─ src/
+│  │  ├─ main.jsx          # จุดเริ่ม React + PortfolioProvider
+│  │  ├─ App.jsx           # แสดงหน้าสำนักงานนักสืบ
+│  │  ├─ story/            # หน้าสำนักงานนักสืบ
+│  │  │  ├─ StoryApp.jsx   # ลำดับฉากวิดีโอ ปุ่มบนภาพ เสียงและเพลง
+│  │  │  ├─ ChatPanel.jsx  # แชต AI + รายการห้อง (สร้าง/สลับ/ลบ)
+│  │  │  ├─ Dossier.jsx    # แฟ้มประวัติ ข้อมูลจาก /api/portfolio
+│  │  │  └─ story.css      # สไตล์ทั้งหมดของหน้า
+│  │  ├─ api.js            # ที่เดียวที่เรียก Backend
+│  │  ├─ portfolio.jsx     # โหลด /api/portfolio แล้วแปลงรูปแบบข้อมูล
+│  │  ├─ sessions.js       # รายการห้องแชตใน localStorage
+│  │  ├─ components/RichText.jsx  # แสดงคำตอบ AI แบบ Markdown
+│  │  └─ mockApi.js, data/ # ข้อมูลจำลองเมื่อไม่ตั้ง VITE_API_URL
+│  ├─ public/story/assets/ # วิดีโอ ภาพ ปุ่ม และเพลงของหน้านักสืบ
 │  ├─ public/members/  # รูปสมาชิก
 │  ├─ Dockerfile       # build เว็บด้วย Vite แล้วเสิร์ฟด้วย nginx
-│  ├─ nginx.conf       # ให้รีเฟรชหน้าย่อยได้ (ส่ง index.html ให้ทุกเส้นทาง)
+│  ├─ nginx.conf       # ส่ง index.html ให้ทุกเส้นทาง
 │  ├─ .dockerignore
 │  ├─ .env.example
 │  └─ package.json
@@ -166,8 +185,8 @@ npm run dev
 เปิด `http://localhost:5173`
 
 - ถ้าไม่ตั้ง `VITE_API_URL` FE จะใช้ข้อมูลจำลอง (mock) ไม่เรียก BE
-- ชี้ไป BE ในเครื่อง: `VITE_API_URL=http://localhost:3000` (และตั้ง `FRONTEND_URL=http://localhost:5173` ใน `BE/.env`)
-- ชี้ไป BE บน Render: `VITE_API_URL=https://aie312-404-brain-not-found-be.onrender.com`
+- ชี้ไป BE ในเครื่อง: `VITE_API_URL=http://localhost:3000` (ถ้าใน `BE/.env` ตั้ง `FRONTEND_URL` ไว้ ต้องเป็น `http://localhost:5173`)
+- ชี้ไป BE บน Render: `VITE_API_URL=https://aie312-404-brain-not-found-be.onrender.com` ใช้ได้เฉพาะตอนเปิดจากเว็บบน Render เพราะ BE บน Render รับเฉพาะโดเมนของ FE (CORS) ถ้าเปิดจาก localhost จะขึ้น "โหลดประวัติไม่สำเร็จ"
 
 ค่า `VITE_` ถูกฝังตอน build/เริ่ม dev server ถ้าแก้ `.env` ต้องรีสตาร์ท
 
@@ -285,7 +304,7 @@ BE อ่าน `BE/portfolio.json` แล้วส่งให้ Gemini เป
 - ตอบเป็นภาษาเดียวกับข้อความล่าสุดของผู้ใช้
 - เมื่อกล่าวถึงสมาชิกครั้งแรก ใช้ชื่อเต็มตามด้วยชื่อเล่นในวงเล็บ เช่น Suppakorn Sangjan (Peem)
 
-ข้อมูลเดียวกันนี้ถูกใช้แสดงในหน้า Team, โปรไฟล์ และ Projects ของเว็บด้วย ถ้าต้องการแก้ข้อมูลสมาชิกหรือผลงาน แก้ที่ `portfolio.json` ที่เดียว
+ข้อมูลเดียวกันนี้ถูกใช้แสดงในแฟ้มประวัติของหน้าเว็บด้วย ถ้าต้องการแก้ข้อมูลสมาชิกหรือผลงาน แก้ที่ `portfolio.json` ที่เดียว
 
 ## Testing
 
@@ -368,7 +387,7 @@ flowchart LR
 | Build Command | `npm install && npm run build` |
 | Publish Directory | `dist` |
 | Environment | `VITE_API_URL` = URL ของ BE |
-| Redirects/Rewrites | `/*` → `/index.html` (Action: Rewrite) เพื่อให้รีเฟรชหน้าย่อยได้ |
+| Redirects/Rewrites | `/*` → `/index.html` (Action: Rewrite) ให้ทุก path เปิดหน้าเว็บได้ |
 
 จากนั้นคัดลอก Deploy Hook ของทั้งสอง service (Settings → Deploy Hook) ไปตั้งใน GitHub Secrets ต่อจากนี้ทุกครั้งที่ push เข้า `main` เว็บจะอัปเดตเอง
 
@@ -378,8 +397,10 @@ flowchart LR
 | --- | --- | --- |
 | เปิดเว็บแล้วรอนานหรือขึ้น "โหลดข้อมูลไม่สำเร็จ" | BE แบบ Free กำลังหลับ | รอ 30-60 วินาทีแล้วกดลองใหม่ |
 | แชตตอบ error | `GEMINI_API_KEY` ผิด ชื่อโมเดลไม่ถูกต้อง หรือโควตาเต็ม | ดู Logs ของ BE แล้วตรวจค่าใน Environment |
-| รีเฟรชหน้า `/chat` แล้ว 404 | ยังไม่ได้ตั้ง Rewrite ของ Static Site | เพิ่มกฎ `/*` → `/index.html` |
-| FE ในเครื่องเรียก BE ไม่ได้ (CORS) | `FRONTEND_URL` ใน BE ไม่ตรงกับที่อยู่ FE | ตั้งให้ตรง ไม่มี `/` ท้าย หรือลบตัวแปรนี้ |
+| เปิดลิงก์ที่มี path ต่อท้ายแล้ว 404 | ยังไม่ได้ตั้ง Rewrite ของ Static Site | เพิ่มกฎ `/*` → `/index.html` |
+| ไม่มีเสียง | เบราว์เซอร์ไม่ให้เล่นเสียงก่อนผู้ใช้แตะหน้าเว็บ หรือกดปิดเสียงไว้ | กดแว่นขยายในหน้าแรก หรือกดปุ่มเสียงมุมขวาบน |
+| ในเครื่องขึ้น "โหลดประวัติไม่สำเร็จ" | `VITE_API_URL` ชี้ไป BE บน Render ซึ่งไม่รับ localhost | ตั้ง `VITE_API_URL=http://localhost:3000` แล้วรัน BE ในเครื่อง หรือเว้นว่างเพื่อใช้ข้อมูลจำลอง |
+| FE ในเครื่องเรียก BE ในเครื่องไม่ได้ (CORS) | `FRONTEND_URL` ใน `BE/.env` ไม่ตรงกับที่อยู่ FE | ตั้งให้ตรง ไม่มี `/` ท้าย หรือลบตัวแปรนี้ |
 | รูปสมาชิกไม่ขึ้น | ชื่อไฟล์ใน `FE/public/members/` ไม่ตรงกับ `photo` ใน `portfolio.json` | ตรวจตัวพิมพ์เล็กใหญ่และนามสกุล (Render รันบน Linux) |
 | `npm run build` ในเครื่องหา `package.json` ไม่เจอ | รันที่รากของ repo | `cd FE` หรือ `cd BE` ก่อน |
 
@@ -388,3 +409,6 @@ flowchart LR
 - push Docker image ขึ้น Docker Hub และให้ Render รันจาก image (ตอนนี้ Render build จากโค้ดโดยตรง ส่วน Docker ใช้ build และสแกนใน CI)
 - จำกัดจำนวนการเรียก `/api/chat` (rate limit)
 - แก้ไขและลบข้อความเดี่ยวในห้องแชต (ตอนนี้ลบได้ทั้งห้อง)
+- สลับภาษาหน้าเว็บไทย/อังกฤษ (มีในหน้าเว็บรุ่นแรก แต่หน้าสำนักงานนักสืบยังเป็นภาษาไทย ส่วน AI ตอบตามภาษาที่ถาม)
+- ชื่อภาษาไทยของสมาชิกในแฟ้มประวัติ (`portfolio.json` ยังไม่มีช่องนี้)
+- ไฟล์วิดีโอรวมประมาณ 70 MB เปิดครั้งแรกบนเน็ตช้าจะรอนาน

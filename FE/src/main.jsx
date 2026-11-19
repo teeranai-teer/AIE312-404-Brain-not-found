@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
-import { SettingsProvider } from './settings.jsx';
 import { PortfolioProvider } from './portfolio.jsx';
-import './styles.css';
+import './story/story.css';
 
+// PortfolioProvider โหลด GET /api/portfolio ครั้งเดียว แล้วแชร์ให้แฟ้มประวัติ (Dossier) ใช้
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <SettingsProvider>
-        <PortfolioProvider>
-          <App />
-        </PortfolioProvider>
-      </SettingsProvider>
-    </BrowserRouter>
+    <PortfolioProvider>
+      <App />
+    </PortfolioProvider>
   </React.StrictMode>
 );

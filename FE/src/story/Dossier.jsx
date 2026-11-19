@@ -190,6 +190,15 @@ function LayoutA({ v }) {
               )}
               <dt>ตำแหน่ง</dt>
               <dd>{v.role}</dd>
+              {/* ช่องติดต่อย้ายมาไว้ใต้ตำแหน่ง (เดิมอยู่ท้ายแฟ้ม) */}
+              <dt>อีเมล</dt>
+              <dd>
+                <Mail v={v} />
+              </dd>
+              <dt>GitHub</dt>
+              <dd>
+                <Github v={v} />
+              </dd>
             </dl>
           </div>
         </div>
@@ -210,21 +219,6 @@ function LayoutA({ v }) {
           <Ribbon icon="i-target.webp">ผลงานที่เกี่ยวข้อง</Ribbon>
           <Projects v={v} />
         </div>
-        <footer className="dfoot">
-          {v.email && (
-            <>
-              <span>
-                {Ico.mail}
-                <Mail v={v} />
-              </span>
-              <span className="sep" />
-            </>
-          )}
-          <span>
-            {Ico.gh}
-            <Github v={v} />
-          </span>
-        </footer>
       </div>
     </>
   );

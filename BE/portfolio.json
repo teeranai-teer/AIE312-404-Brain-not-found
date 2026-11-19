@@ -31,7 +31,7 @@
       "photo": "/members/tonn.jpg",
       "role": "Backend Developer",
       "responsibilities": "Backend และฐานข้อมูล: สร้าง API ด้วย Express, ออกแบบตาราง PostgreSQL บน Neon เก็บประวัติแชต, เชื่อม Gemini พร้อมเขียน system prompt ให้ AI ตอบจากข้อมูล Portfolio, และดูแล CI/CD",
-      "bio": "นักศึกษาวิศวกรรมศาสตร์ที่สนใจการพัฒนาระบบ AI, Robotics, Hardware และ Infrastructure ชอบการแก้ปัญหาด้วยเทคโนโลยี การคิดวิเคราะห์ และการเรียนรู้สิ่งใหม่",
+      "bio": "นักศึกษาชั้นปีที่ 3 สาขาวิศวกรรมปัญญาประดิษฐ์ มหาวิทยาลัยกรุงเทพ มีความสนใจด้าน Artificial Intelligence (AI), Robotics, Hardware และ Infrastructure ชื่นชอบการคิดวิเคราะห์ การออกแบบและพัฒนาระบบ รวมถึงการประยุกต์ใช้เทคโนโลยีเพื่อแก้ไขปัญหาในโลกจริง มุ่งมั่นเรียนรู้เทคโนโลยีใหม่ ๆ พัฒนาทักษะทางวิศวกรรม และสร้างสรรค์นวัตกรรมที่สามารถนำไปใช้งานได้จริง",
       "interests": [
         "Artificial Intelligence",
         "Robotics",

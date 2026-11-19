@@ -343,3 +343,34 @@ button{font-family:inherit;cursor:pointer}
 /* ป้ายเปิดประตู: ตัวหนังสือในรูปเล็ก จึงให้กว้างกว่าปุ่มในห้องนักสืบ ~60% (ต้องอยู่หลังกฎด้านบน) */
 #enter{width:clamp(220px,calc(var(--sw)*.2),440px)}
 @media (max-height:520px){ #enter{width:clamp(180px,calc(var(--sw)*.17),320px)} }
+
+/* ===== ปรับรอบ 19 พ.ย. (2): แฟ้มประวัติ ===== */
+/* ส่วนต่างๆ ในแฟ้มห้ามหดตัว (เดิมประวัติยาวแล้วถูกบีบจนข้อความทับป้าย "ทักษะทางเทคนิค") ถ้ายาวเกินให้เลื่อนดูแทน */
+.sheet .in>*{flex-shrink:0}
+.la .info{padding-top:5cqw}
+/* ป้ายหัวข้อแบบกระดาษเก่า: ลายกระดาษ + คราบสีน้ำตาล + ขอบขาดไม่เรียบ + เงาด้านในเหมือนกระดาษไหม้ขอบ */
+.banner,.rib span{
+  color:rgba(48,27,8,.92);
+  background:
+    radial-gradient(ellipse 38% 70% at 12% 35%,rgba(105,62,20,.42),transparent 70%),
+    radial-gradient(ellipse 30% 80% at 88% 70%,rgba(95,55,16,.45),transparent 70%),
+    radial-gradient(ellipse 22% 50% at 58% 18%,rgba(120,78,30,.25),transparent 70%),
+    url(/story/assets/paper.webp) center/260% 260%,
+    linear-gradient(180deg,#d8bd88,#b08a52);
+  background-blend-mode:multiply,multiply,multiply,multiply,normal;
+  border-top:.3cqw solid rgba(74,42,14,.75);
+  border-bottom:.3cqw solid rgba(74,42,14,.75);
+  box-shadow:inset 0 0 1.6cqw rgba(62,32,6,.75),inset 0 0 .35cqw rgba(62,32,6,.7);
+  text-shadow:0 .12cqw 0 rgba(255,236,196,.45),0 0 .5cqw rgba(110,70,25,.35);
+  filter:sepia(.25) saturate(.9);
+}
+/* ขอบขาดของป้ายใหญ่ "แฟ้มประวัติ" */
+.banner{clip-path:polygon(0 4%,6% 0,14% 2.5%,23% 0,33% 3%,44% .5%,55% 2.5%,66% 0,77% 3%,88% .5%,95% 2.5%,100% 0,97% 26%,94.5% 50%,97.5% 76%,100% 100%,92% 97%,81% 100%,70% 97.5%,59% 100%,47% 97%,36% 100%,25% 97.5%,14% 100%,5% 97%,0 100%,3% 73%,5.5% 50%,2.5% 27%)}
+/* ขอบขาดของป้ายเล็กแต่ละหัวข้อ */
+.rib span{clip-path:polygon(0 5%,8% 0,19% 4%,31% .5%,44% 4.5%,57% 0,70% 4%,83% .5%,93% 3.5%,100% 0,96.5% 30%,94% 50%,97% 72%,100% 100%,90% 96%,77% 100%,64% 96.5%,51% 100%,38% 96%,25% 100%,12% 96.5%,0 100%,2% 70%,3.5% 48%,1.5% 26%)}
+/* แบบ A: บีบระยะห่างช่องข้อมูลเล็กน้อย เพราะอีเมลกับ GitHub ย้ายมาอยู่ตรงนี้ (กันเนื้อหาล้นแฟ้ม) */
+.la .facts{gap:.6cqw 1cqw}
+.la .info .stampr{margin-bottom:1.2cqw}
+/* ทักษะแบบ A: ไม่ตัดคำกลางชื่อทักษะ (เช่น Machine Learning) ประหยัดได้ 1 แถว */
+.diamonds{grid-template-columns:repeat(4,auto);justify-content:space-between;padding-right:2cqw}
+.diamonds li{white-space:nowrap}

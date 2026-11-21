@@ -154,7 +154,7 @@ export default function ChatPanel({ active }) {
       <header className="chat-head">
         <img className="medal" src={asset('medal.webp')} alt="" />
         <div className="plaque">
-          <span className="l1">พูดคุยกับนักสืบ</span>
+          <span className="l1">พูดกับนักสืบ</span>
         </div>
       </header>
 
